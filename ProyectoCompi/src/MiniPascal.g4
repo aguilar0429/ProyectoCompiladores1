@@ -1,6 +1,6 @@
 grammar MiniPascal;
 
-
+options { caseInsensitive = true; }
 
 
 STRING: 'STRING';

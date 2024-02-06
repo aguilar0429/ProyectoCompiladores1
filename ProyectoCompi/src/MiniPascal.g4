@@ -1,6 +1,11 @@
 grammar MiniPascal;
 
-options { caseInsensitive = true; }
+options {
+    caseInsensitive = true;
+}
+
+program: var_block EOF;
+
 
 //TO DO:
 // | |  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
@@ -13,11 +18,16 @@ options { caseInsensitive = true; }
 // | |  Ciclos: Ciclos for while repeat y if.
 
 
-//variable declaration
-var_decl
-    : VAR ID (',' ID)* ':' type_spec
+// variable declaration
+var_block
+    : VAR (var_decl)+
     ;
-    
+
+var_decl
+    : ID (',' ID)* ':' type_spec ';'
+    | ID ':' type_spec ':=' expr ';'
+    ;
+
 type_spec
     : INTEGER
     | CHARACTER
@@ -25,6 +35,14 @@ type_spec
     | STRING
     ;
 
+expr
+    : expr MUL expr
+    | expr DIV expr
+    | expr MOD expr
+    | expr PLUS expr
+    | expr MINUS expr
+    | DIGIT
+    ;
 
 //OPERADORES
 PLUS: '+';
@@ -49,7 +67,6 @@ STRING: 'STRING';
 CONSTCHAR: 'CONSTCHAR';
 CONSTINT: 'CONSTINT';
 
-
 //PALABRAS RESERVADAS
 READLN: 'READLN';
 READ: 'READ';
@@ -57,11 +74,12 @@ READ: 'READ';
 WRITELN: 'WRITELN';
 WRITE: 'WRITE';
 
+BOOL_VAL: TRUE | FALSE;
+
 TRUE: 'true';
 FALSE: 'false';
 
-VAR: 'VAR';
-
+VAR: 'var';
 
 //BUILDING BLOCKS
 NEWLINE : [\r\n]+ -> skip;
@@ -75,4 +93,3 @@ FLOAT  : DIGIT+ '.' DIGIT*
        | '.' DIGIT+
        ;
 WS      : (' ' | '\t' | '\n' | '\r')+ -> skip;
-

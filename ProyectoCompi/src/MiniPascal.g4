@@ -4,11 +4,11 @@ options {
     caseInsensitive = true;
 }
 
-program: var_block EOF;
+program: program_block EOF;
 
 
 //TO DO:
-// | |  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
+// |X|  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
 // | |  Variables: Declaracion de variables tipo entero, caracter, booleano y cadena hasta de 2 dimensiones. Tambien constantes. Lexcema :=
 // | |  Operadores: Aritmeticos, relacionales y logicos.
 // | |  Read y Write: Lectura y escritura de variables.
@@ -19,16 +19,33 @@ program: var_block EOF;
 
 
 // variable declaration
+program_block
+    : PROGRAM ID var_block? function_block*? function_decl //Last Function is the main
+;
+
+function_block
+    :FUNCTION ID '(' (var_decl)* ')' ':' var_type ';' var_block? function_decl
+    ;
+
+function_decl
+    : 'begin' function 'end'
+    ;
+
+function
+    : 'function code here'
+    ;
+
 var_block
     : VAR (var_decl)+
     ;
 
 var_decl
-    : ID (',' ID)* ':' type_spec ';'
-    | ID ':' type_spec ':=' expr ';'
+    : ID (',' ID)* ':' var_type ';'
+    | ID ':' var_type ':=' expr ';'
+    | ID ':' ARRAY '[' REALNUM '..' REALNUM ']' OF var_type ';'
     ;
 
-type_spec
+var_type
     : INTEGER
     | CHARACTER
     | BOOLEAN
@@ -36,38 +53,41 @@ type_spec
     ;
 
 expr
-    : expr MUL expr
-    | expr DIV expr
-    | expr MOD expr
-    | expr PLUS expr
-    | expr MINUS expr
-    | DIGIT
+    : expr '*' expr
+    | expr '/' expr
+    | expr '%' expr
+    | expr '+' expr
+    | expr '-' expr
+    | REALNUM
     ;
 
 //OPERADORES
-PLUS: '+';
-MINUS: '-';
-MUL: '*';
-DIV: '/';
-MOD: '%';
+//PLUS: '+';
+//MINUS: '-';
+//MUL: '*';
+//DIV: '/';
+//MOD: '%';
 
-NEQ: '<>';
-EQ: '=';
-LT: '<';
-GT: '>';
-LEQ: '<=';
-GEQ: '>=';
+//NEQ: '<>';
+//EQ: '=';
+//LT: '<';
+//GT: '>';
+//LEQ: '<=';
+//GEQ: '>=';
 
+//PALABRAS RESERVADAS
+//Aqui hay que poner todas las palabras reservadas que no pueden ser usadas como identificadores
 
-//TIPOS DE DATOS
+//Tipos de Datos
 INTEGER: 'INTEGER';
 CHARACTER: 'CHARACTER';
 BOOLEAN: 'BOOLEAN';
+ARRAY: 'ARRAY';
 STRING: 'STRING';
 CONSTCHAR: 'CONSTCHAR';
 CONSTINT: 'CONSTINT';
 
-//PALABRAS RESERVADAS
+//Funciones o Estados
 READLN: 'READLN';
 READ: 'READ';
 
@@ -79,17 +99,22 @@ BOOL_VAL: TRUE | FALSE;
 TRUE: 'true';
 FALSE: 'false';
 
+PROGRAM: 'program';
+FUNCTION: 'function';
 VAR: 'var';
+OF: 'of';
 
 //BUILDING BLOCKS
+ID     : [A-Z][A-Z0-9_]*;
 NEWLINE : [\r\n]+ -> skip;
 STR     : '"' (ESC|.)*? '"';
 ESC     : '\\"'  | '\\\\' | '\\t' | '\\n' | '\\r';
 COMMENT : '{' .*? '}' -> skip;
-ID     : [A-Z][A-Z0-9_]*;
 LETTER : [A-Z]+;
-DIGIT  : [0-9]+;
-FLOAT  : DIGIT+ '.' DIGIT*
-       | '.' DIGIT+
-       ;
+
+//NUMBERS
+REALNUM   : ('-'? DIGIT | DIGIT) ;
+FLOAT     : REALNUM '.' DIGIT ;
+DIGIT     : [0-9]+;
+
 WS      : (' ' | '\t' | '\n' | '\r')+ -> skip;

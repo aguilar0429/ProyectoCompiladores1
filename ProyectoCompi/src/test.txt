@@ -1,0 +1,18 @@
+{funcion#1}
+program abc;
+function v;
+begin
+    var x, y :Integer;
+    s:STRING:="x www2w2e";
+    and:character := '&';
+    pass_test:boolean:=true;
+    arreglo:Array[1..50] of Integer;
+    arreglo_bidi: Array[1..10,1..5] of Integer;
+end;
+
+{funcion#2}
+function swe;
+begin
+    var x, y :INTEGER;
+    s:STRING:="x";
+end;

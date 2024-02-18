@@ -3,9 +3,10 @@ grammar MiniPascal;
 options {
     caseInsensitive = true;
 }
+
 //TO DO:
 // |X|  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
-// | |  Variables: Declaracion de variables tipo entero, caracter, booleano y cadena hasta de 2 dimensiones. Tambien constantes. Lexcema :=
+// |X|  Variables: Declaracion de variables tipo entero, caracter, booleano y cadena hasta de 2 dimensiones. Tambien constantes. Lexcema :=
 // | |  Operadores: Aritmeticos, relacionales y logicos.
 // | |  Read y Write: Lectura y escritura de variables.
 // | |  Funciones: Declaracion y uso de funciones con valores o referencias. Tambien recursividad.
@@ -13,6 +14,11 @@ options {
 // | |  Manejo de errores: Errores lexicos.
 // | |  Ciclos: Ciclos for while repeat y if.
 
+options {
+    caseInsensitive = true;
+}
+
+program: PROGRAM program_block EOF;
 
 program: program_block EOF;
 
@@ -72,6 +78,7 @@ var_decl
     //| ID (',' ID)* ':' CHARACTER ':=' CHAR ';'
     //| ID (',' ID)* ':' BOOLEAN ':=' BOOL_VAL ';'
     // ID ':' var_type ':=' expr ';'
+
     ;
 
 //INICIALIZACION DE VARIABLES
@@ -100,25 +107,22 @@ expr
     | expr '+' expr
     | expr '-' expr
     | REALNUM
+    | DECIMAL
+    | STR
     ;
+
 
 //----------------------------------------------RESERVADAS Y PALABRAS---------------------------------------------------
 
 //PALABRAS RESERVADAS
 INTEGER: 'INTEGER';
+FLOAT: 'float';
 CHARACTER: 'CHARACTER';
 BOOLEAN: 'BOOLEAN';
 ARRAY: 'ARRAY';
 STRING: 'STRING';
 CONSTCHAR: 'CONSTCHAR';
-CONSTINT: 'CONSTINT';
-
-//Funciones o Estados
-READLN: 'READLN';
-READ: 'READ';
-
-WRITELN: 'WRITELN';
-WRITE: 'WRITE';
+CONSTSTR: 'CONSTSTR';
 
 BOOL_VAL: TRUE | FALSE;
 
@@ -144,16 +148,17 @@ CHAR    : '\'' . '\'' ;
 CONST   : '\'' (ESC | ~["\\])* '\'' ;
 ID      : [a-z][A-Z0-9_]*;
 NEWLINE : [\r\n]+ -> skip;
-STR     : '"' (ESC|.)*? '"';
+STR     : '"' (ESC | ~["\\])* '"' ;
 ESC     : '\\"'  | '\\\\' | '\\t' | '\\n' | '\\r';
 COMMENT : '{' .*? '}' -> skip;
 LETTER  : [A-Z]+;
 
 size    : REALNUM '..' REALNUM;
 
+
 //NUMBERS
 REALNUM   : ('-'? DIGIT | DIGIT) ;
-FLOAT     : REALNUM '.' DIGIT ;
+DECIMAL     : REALNUM '.' DIGIT ;
 DIGIT     : [0-9]+;
 
 WS      : (' ' | '\t' | '\n' | '\r')+ -> skip;

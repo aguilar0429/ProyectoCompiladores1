@@ -6,8 +6,8 @@ arreglo_bidi: Array[1..10,1..5] of Integer;
 s:String;
 
 Function f(prueba, prueba2, prueba3 : Integer ; prueba4 : String):Integer;
-Begin
-    f := 3;
+Begin 
+    f := 3; 
 end;
 Begin
 {iniciamos las variables}

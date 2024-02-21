@@ -37,10 +37,13 @@ public class Main {
         }
 
         CharStream ch = fromFileName(input);
+
         MiniPascalLexer lexer = new MiniPascalLexer(ch);
+
         ArrayList<ErrorManagement> ListaErrores= new ArrayList<>();
 
         lexer.removeErrorListeners();
+
         lexer.addErrorListener(new BaseErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
@@ -52,17 +55,17 @@ public class Main {
         });
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniPascalParser parser = new MiniPascalParser(tokens);
-        parser.removeErrorListeners(); // remove ConsoleErrorListener
+        parser.removeErrorListeners();
         parser.addErrorListener(new BaseErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
                 //throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
-                ListaErrores.add(new ErrorManagement(line, charPositionInLine, "Lex", msg, ErrorManagement.ErrorTipo.Lexico));
+                ListaErrores.add(new ErrorManagement(line, charPositionInLine, "Lex", msg, ErrorManagement.ErrorTipo.Sintactico));
                 String error_color = "\033[31m";
                 System.out.println(error_color + "Error Sintactico: " + line + ":" + charPositionInLine + " " + msg);
             }
-        }); // add ours
-        parser.program(); // parse as usual
+        });
+        parser.program();
     }
 }
 

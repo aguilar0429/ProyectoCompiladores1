@@ -15,10 +15,7 @@ options {
 // | |  Ciclos: Ciclos for while repeat y if.
 
 
-
-program: PROGRAM program_block EOF;
-
-
+program: program_block EOF;
 
 program_block: PROGRAM ID ';'
     var_block? //Bloque de Variables globales

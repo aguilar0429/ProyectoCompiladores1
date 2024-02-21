@@ -1,19 +1,26 @@
-program ciclos;
+Program ciclos;
 {declaramos las variables}
 var lenght,i,j,x,y,cont:Integer;
-    arreglo:Array[1..50] of Integer;
-    arreglo_bidi: Array[1..10,1..5] of Integer;
-    s:String;
+arreglo:Array[1..50] of Integer;
+arreglo_bidi: Array[1..10,1..5] of Integer;
+s:String;
 
-function f():Integer;
+Function f(prueba, prueba2, prueba3 : Integer ; prueba4 : String):Integer;
 Begin
     f := 3;
 end;
-
-begin
+Begin
 {iniciamos las variables}
-    lenght := 50;
-    x := 10;
-    y := 5;
-    cont := 1;
+lenght := 50;
+x := 10;
+y := 5;
+cont := 1;
+
+{llenamos el arreglo bidimensional}
+For i := 10 Downto 1 Do
+    For j := 20 Downto 1 Do
+        begin
+            x := 10;
+            y := 20;
+        end;
 end.

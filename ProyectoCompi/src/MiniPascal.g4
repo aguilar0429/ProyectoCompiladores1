@@ -13,13 +13,17 @@ options {
 // |X|  Operadores: Aritmeticos, relacionales y logicos.
 // |O|  Read y Write: Lectura y escritura de variables.
 // | |  Funciones: Declaracion y uso de funciones con valores o referencias. Tambien recursividad.
+
 // |O|  Main: Funcion principal.
 // |X|  Manejo de errores: Errores lexicos.
-// | |  Ciclos: Ciclos for while repeat y if.
+// |O|  Ciclos: Ciclos for while repeat y if.
+
 
 //BUGS A ARREGLAR:
 // | | al instanciar variables, no se puede hacer algo como 5-9, porque agarra el -9 como realnum. Por ahora solo se puede hacer 5- 9.
 // | | No estoy seguro de como se deben comportar los \n y demas caracteres de escape en las cadenas.
+// | | En las condicionales (if) como no contiene begin y end, no se como cerrar el bloque.
+
 
 // COSAS A CONSIDERAR PARA CUANDO HAGAMOS EL ANALISIS SEMANTICO:
 // | | No se pueden declarar variables con el mismo nombre que otra variable o funcion.
@@ -64,6 +68,10 @@ instr
     | read_call
     | write_call
     | for_loop
+    | while_loop
+    | repeat_loop
+    | if_statement
+
     //demas instrucciones que se puedan ejecutar como if, while, repeat, etc
     ;
 
@@ -82,8 +90,26 @@ write_call
 //CICLO FOR
 //Fors que ejecutan mas de una instruccion deben ir entre begin y end
 for_loop
-    : FOR ID ':=' expr TO expr DO (BEGIN instr+ END ';' | instr)
-    | FOR ID ':=' expr DOWNTO expr DO (BEGIN instr+ END ';' | instr)
+
+    : FOR ID ':=' expr TO expr DO (BEGIN instr+ END ';')
+    | FOR ID ':=' expr DOWNTO expr DO (instr)
+    | FOR ID ':=' expr DOWNTO expr DO (BEGIN instr+ END ';')
+    ;
+
+while_loop
+    : WHILE '(' expr comparison expr ')' DO (BEGIN instr+ END ';')
+    ;
+
+repeat_loop
+    : REPEAT instr+ UNTIL bool_expr ';'
+    ;
+
+if_statement
+    : IF '(' if_condition  ')' THEN (instr)+ (ELSEIF '(' if_condition ')' THEN (instr)+ )* (ELSE (instr)+ )*
+    ;
+
+if_condition
+    : expr (logical_opr expr)*
     ;
 
 
@@ -176,6 +202,22 @@ bool_expr
     | ID
     ;
 
+
+comparison
+    : MAYORQUE
+    | MENORQUE
+    | MAYORIGUAL
+    | MENORIGUAL
+    | IGUAL
+    | DISTINTO
+    ;
+
+logical_opr
+    : AND
+    | OR
+    ;
+
+
 //----------------------------------------------RESERVADAS Y PALABRAS---------------------------------------------------
 
 //PALABRAS RESERVADAS
@@ -188,6 +230,7 @@ DIV: 'div';
 DO: 'do';
 DOWNTO: 'downto';
 ELSE: 'else';
+ELSEIF: 'elseif';
 END: 'end';
 FILE: 'file';
 FOR: 'for';
@@ -239,6 +282,13 @@ STR     : '"' (ESC | ~["\\])* '"' ;
 ESC     : '\\"'  | '\\\\' | '\\t' | '\\n' | '\\r';
 //COMMENT : '{' .*? '}' -> skip; //Esta version permitia tener '{' dentro de los comentarios pero no '}'.
 COMMENT : '{' ~[{}]* '}' -> skip;
+MAYORQUE : '>';
+MENORQUE : '<';
+MAYORIGUAL : '>=';
+MENORIGUAL : '<=';
+IGUAL : '=';
+DISTINTO : '<>';
+
 
 LETTER  : [A-Z]+;
 

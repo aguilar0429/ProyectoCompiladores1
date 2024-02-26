@@ -3,27 +3,20 @@ grammar MiniPascal;
 options {
     caseInsensitive = true;
 }
-// |X| == Hecho
-// |O| == Medio hecho, ocupa pruebas/modificaciones
-// | | == No hecho
 
 //TO DO:
 // |X|  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
 // |X|  Variables: Declaracion de variables tipo entero, caracter, booleano y cadena hasta de 2 dimensiones. Tambien constantes. Lexcema :=
 // |X|  Operadores: Aritmeticos, relacionales y logicos.
-// |O|  Read y Write: Lectura y escritura de variables.
+// | |  Read y Write: Lectura y escritura de variables.
 // | |  Funciones: Declaracion y uso de funciones con valores o referencias. Tambien recursividad.
-
-// |O|  Main: Funcion principal.
-// |X|  Manejo de errores: Errores lexicos.
-// |O|  Ciclos: Ciclos for while repeat y if.
-
+// | |  Main: Funcion principal.
+// | |  Manejo de errores: Errores lexicos.
+// | |  Ciclos: Ciclos for while repeat y if.
 
 //BUGS A ARREGLAR:
 // | | al instanciar variables, no se puede hacer algo como 5-9, porque agarra el -9 como realnum. Por ahora solo se puede hacer 5- 9.
 // | | No estoy seguro de como se deben comportar los \n y demas caracteres de escape en las cadenas.
-// | | En las condicionales (if) como no contiene begin y end, no se como cerrar el bloque.
-
 
 // COSAS A CONSIDERAR PARA CUANDO HAGAMOS EL ANALISIS SEMANTICO:
 // | | No se pueden declarar variables con el mismo nombre que otra variable o funcion.
@@ -42,7 +35,7 @@ program_block: PROGRAM ID ';'
 
 //BLOCK DE FUNCIONES
 function_block
-    : (FUNCTION ID '(' (function_var_decl (';' function_var_decl)*)? ')' ':' var_type ';'
+    : (FUNCTION ID '(' (var_decl (';' var_decl)*)? ')' ':' var_type ';'
         var_block? //Bloque de Variables locales
         BEGIN
             instr+
@@ -51,81 +44,42 @@ function_block
     ;
 
 function_call
-    : ID '(' (expr (',' expr)*)? ')' ';'
+    : ID '(' (expr (',' expr)*)? ')'
     ;
 
-function_var_decl
-    : ID (',' ID)* ':' var_type
-    | ID (',' ID)* ':' ARRAY '[' size (',' size)? ']' OF array_type
-    | ID (',' ID)* ':' const_type
-    ;
-
-
-//------------------------------------------------------INSTRUCCIONES-------------------------------------------------------
-instr
-    : var_init
-    | function_call
-    | read_call
-    | write_call
-    | for_loop
-    | while_loop
-    | repeat_loop
-    | if_statement
-
-    //demas instrucciones que se puedan ejecutar como if, while, repeat, etc
-    ;
-
-//-----------------------------------------------READS Y WRITES-------------------------------------------------
-
-read_call
-    : READ '(' ID ')' ';'
-    ;
-
-write_call
-    : WRITE '(' CONST_VAL (',' (math_expr|STR|ID))? ')' ';' //Integer, char o string.
-    ;
 
 //-----------------------------------------------CICLOS Y CONDICIONALES-------------------------------------------------
 
 //CICLO FOR
 //Fors que ejecutan mas de una instruccion deben ir entre begin y end
 for_loop
-
-    : FOR ID ':=' expr TO expr DO (BEGIN instr+ END ';')
-    | FOR ID ':=' expr DOWNTO expr DO (instr)
-    | FOR ID ':=' expr DOWNTO expr DO (BEGIN instr+ END ';')
+    : FOR ID ':=' expr TO expr DO (BEGIN instr+ END ';' | instr)
+    | FOR ID ':=' expr DOWNTO expr DO (BEGIN instr+ END ';' | instr)
     ;
 
-while_loop
-    : WHILE '(' expr comparison expr ')' DO (BEGIN instr+ END ';')
-    ;
-
-repeat_loop
-    : REPEAT instr+ UNTIL bool_expr ';'
-    ;
-
-if_statement
-    : IF '(' if_condition  ')' THEN (instr)+ (ELSEIF '(' if_condition ')' THEN (instr)+ )* (ELSE (instr)+ )*
-    ;
-
-if_condition
-    : expr (logical_opr expr)*
+//INSTRUCCIONES
+instr
+    : var_init
+    | READ '(' ID ')' ';'
+    | WRITE '(' expr ')' ';'
+    | for_loop
+    //demas instrucciones que se puedan ejecutar como if, while, repeat, etc
     ;
 
 
 //------------------------------------------------------VARIABLES-------------------------------------------------------
 //BLOCK DE VARIABLES CON UN SOLO VAR Y VARIAS DECLARACIONES
 var_block
-    : VAR (var_decl)+
+    : VAR (var_decl ';')+ //Saque el punto y coma para que pueda ser utilizado dentro de los inputs de las funciones
     ;
 
 //DECLARACION DE VARIABLES DENTRO DE UN BLOQUE
 var_decl
-    : ID ':' var_type ':=' expr ';'//Probe en un compilador de pascal y no se puede asignar valor a mas de una variable a la vez
-    | ID (',' ID)* ':' var_type ';'
-    | ID (',' ID)* ':' ARRAY '[' size (',' size)? ']' OF array_type ';'
-    | ID ':' const_type ':=' CONST_VAL ';'
-    | ID (',' ID)* ':' const_type ';'
+    : ID ':' var_type ':=' expr //Probe en un compilador de pascal y no se puede asignar valor a mas de una variable a la vez
+    | ID (',' ID)* ':' var_type
+    | ID (',' ID)* ':' ARRAY '[' size (',' size)? ']' OF array_type
+    | ID ':' const_type ':=' CONST
+    | ID (',' ID)* ':' const_type
     //Puse las demas opciones comentadas ya que pienso que son parte del analisis semantico, no del analisis sintactico
     //| ID (',' ID)* ':' STRING ':=' STR ';'
     //| ID (',' ID)*  INTEGER ':=' REALNUM ';'
@@ -133,6 +87,7 @@ var_decl
     //| ID (',' ID)* ':' CHARACTER ':=' CHAR ';'
     //| ID (',' ID)* ':' BOOLEAN ':=' BOOL_VAL ';'
     // ID ':' var_type ':=' expr ';'
+
     ;
 
 //INICIALIZACION DE VARIABLES
@@ -164,7 +119,7 @@ const_type
     | CONSTSTR
     ;
 
-//------------------------------------------------------EXPRESIONES------------------------------------------------------
+//EXPRESIONES ASIGNABLES A VARIABLES
 expr
     : math_expr
     | bool_expr
@@ -179,7 +134,7 @@ math_expr
     | math_expr DIV math_expr
     | math_expr MOD math_expr
     | math_expr '+' math_expr
-    | math_expr '-'math_expr
+    | math_expr '-' math_expr
     | DECIMAL
     | REALNUM
     | array_ID
@@ -202,93 +157,50 @@ bool_expr
     | ID
     ;
 
-
-comparison
-    : MAYORQUE
-    | MENORQUE
-    | MAYORIGUAL
-    | MENORIGUAL
-    | IGUAL
-    | DISTINTO
-    ;
-
-logical_opr
-    : AND
-    | OR
-    ;
-
-
 //----------------------------------------------RESERVADAS Y PALABRAS---------------------------------------------------
 
 //PALABRAS RESERVADAS
-AND: 'and';
-ARRAY: 'array';
-BEGIN: 'begin';
-CASE: 'case';
-CONST: 'const';
-DIV: 'div';
-DO: 'do';
-DOWNTO: 'downto';
-ELSE: 'else';
-ELSEIF: 'elseif';
-END: 'end';
-FILE: 'file';
-FOR: 'for';
-FUNCTION: 'function';
-GOTO: 'goto';
-IF: 'if';
-IN: 'in';
-LABEL: 'label';
-MOD: 'mod';
-NIL: 'nil';
-NOT: 'not';
-OR: 'or';
-OF: 'of';
-PACKED: 'packed';
-PROCEDURE: 'procedure';
-PROGRAM: 'program';
-READ: 'read';
-RECORD: 'record';
-REPEAT: 'repeat';
-SET: 'set';
-THEN: 'then';
-TO: 'to';
-TYPE: 'type';
-UNTIL: 'until';
-VAR: 'var';
-WHILE: 'while';
-WRITE: 'write';
-WITH: 'with';
-
-//TIPOS DE DATOS
 INTEGER: 'INTEGER';
 FLOAT: 'float';
 CHARACTER: 'CHARACTER';
 BOOLEAN: 'BOOLEAN';
+ARRAY: 'ARRAY';
 STRING: 'STRING';
 CONSTCHAR: 'CONSTCHAR';
 CONSTSTR: 'CONSTSTR';
 
+BOOL_VAL: TRUE | FALSE;
+
+TRUE: 'true';
+FALSE: 'false';
+DIV: 'div';
+MOD: 'mod';
+
+PROGRAM: 'program';
+FUNCTION: 'function';
+READ: 'read';
+WRITE: 'write';
+VAR: 'var';
+OF: 'of';
+FOR: 'for';
+TO: 'to';
+DOWNTO: 'downto';
+DO: 'do';
+BEGIN: 'begin';
+END: 'end';
+IF: 'if';
+THEN: 'then';
+ELSE: 'else';
 
 //BUILDING BLOCKS
 //CHAR    : '\'' . '\'' ;
-CONST_VAL   : '\'' (ESC | ~["\\])* '\'' ;
+CONST   : '\'' (ESC | ~["\\])* '\'' ;
 ID      : [a-z][A-Z0-9_]*;
-BOOL_VAL: TRUE | FALSE;
-TRUE: 'true';
-FALSE: 'false';
 NEWLINE : [\r\n]+ -> skip;
 STR     : '"' (ESC | ~["\\])* '"' ;
 ESC     : '\\"'  | '\\\\' | '\\t' | '\\n' | '\\r';
 //COMMENT : '{' .*? '}' -> skip; //Esta version permitia tener '{' dentro de los comentarios pero no '}'.
 COMMENT : '{' ~[{}]* '}' -> skip;
-MAYORQUE : '>';
-MENORQUE : '<';
-MAYORIGUAL : '>=';
-MENORIGUAL : '<=';
-IGUAL : '=';
-DISTINTO : '<>';
-
 
 LETTER  : [A-Z]+;
 

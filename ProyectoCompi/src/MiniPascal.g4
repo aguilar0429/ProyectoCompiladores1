@@ -13,8 +13,8 @@ options {
 // |X|  Operadores: Aritmeticos, relacionales y logicos.
 // |O|  Read y Write: Lectura y escritura de variables.
 // | |  Funciones: Declaracion y uso de funciones con valores o referencias. Tambien recursividad.
-// | |  Main: Funcion principal.
-// | |  Manejo de errores: Errores lexicos.
+// |O|  Main: Funcion principal.
+// |X|  Manejo de errores: Errores lexicos.
 // | |  Ciclos: Ciclos for while repeat y if.
 
 //BUGS A ARREGLAR:

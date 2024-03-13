@@ -60,8 +60,9 @@ public class Main {
                 msgTranslated = msgTranslated.replace("missing","falta");
                 msgTranslated = msgTranslated.replace("mismatched input","entrada incorrecta");
                 msgTranslated = msgTranslated.replace("at","en");
-                ListaErrores.add(new ErrorManagement(line, charPositionInLine, "Lex", msg, ErrorManagement.ErrorTipo.Lexico));
+                ListaErrores.add(new ErrorManagement(line, charPositionInLine, "Lex", msgTranslated, ErrorManagement.ErrorTipo.Lexico));
                 System.out.println(error_color + "Error Léxico: " + line + ":" + charPositionInLine + " " + msgTranslated);
+
             }
 
         });
@@ -84,20 +85,9 @@ public class Main {
                 String error_color = "\033[31m";
 
                 System.out.println(error_color + "Error Sintactico: " + line + ":" + charPositionInLine + " " + msgTranslated);
-                //underlineError(recognizer,(Token)offendingSymbol, line, charPositionInLine);
-//                CommonTokenStream tokens = (CommonTokenStream)recognizer.getInputStream();
-//                String input = tokens.getTokenSource().getInputStream().toString();
-//                String[] lines = input.split("\n");
-//                String errorLine = lines[line - 1];
-//                System.err.println(errorLine);
-//                for (int i=0; i<charPositionInLine; i++) System.err.print(" ");
-//                Token offendingToken = (Token)offendingSymbol;
-//                int start = offendingToken.getStartIndex();
-//                int stop = offendingToken.getStopIndex();
-//                if ( start>=0 && stop>=0 ) {
-//                    for (int i=start; i<=stop; i++) System.err.print("^");
-//                }
-//                System.err.println();
+                underlineError(recognizer,(Token)offendingSymbol, line, charPositionInLine);
+
+
 
             }
         public  void underlineError(Recognizer recognizer,

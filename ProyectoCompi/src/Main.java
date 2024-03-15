@@ -40,7 +40,11 @@ public class Main {
         CharStream ch = fromFileName(input);
 
         MiniPascalLexer lexer = new MiniPascalLexer(ch);
-
+        MiniPascalLexer lexer2 = new MiniPascalLexer(ch);
+        CommonTokenStream tokens2 = new CommonTokenStream(lexer2);
+        MiniPascalParser parser2 = new MiniPascalParser(tokens2);
+        String str = new MiniPascalNewVisitor().visit(parser2.program());
+        System.out.println(str);
 
 
         lexer.removeErrorListeners();

@@ -1,0 +1,10 @@
+program abc;
+{var_block}
+var x:Integer;
+Function f():Integer;
+Begin
+f := 3;
+End;
+begin
+x:=5;
+end.

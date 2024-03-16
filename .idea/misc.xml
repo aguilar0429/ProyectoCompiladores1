@@ -6,7 +6,7 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/ProyectoCompi/src/MiniPascal.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\eduar\OneDrive\Documents\GitHub\ProyectoCompi1\ProyectoCompi\src" />
+          <option name="outputDir" value="C:\JavaLib\ProyectoCompi\ProyectoCompi\src" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="" />

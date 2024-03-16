@@ -12,7 +12,7 @@ begin
 	{iniciamos las variables}
 	lenght := 50;
 	x := 10;
-	y # := 5;
+	y := 5;
 	cont := 1;
 
 	{llenamos el arreglo bidimensional}

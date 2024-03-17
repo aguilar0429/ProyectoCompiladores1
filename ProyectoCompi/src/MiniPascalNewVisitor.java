@@ -7,7 +7,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitProgram_block(MiniPascalParser.Program_blockContext ctx) {
-        String str = "PROGRAM_HEADER...\n" + ctx.PROGRAM().getText() + " " + ctx.ID().getText() + ctx.SEMICOLON().getText() + "\nPROGRAM_BLOCK...";
+        String str = "PROGRAM_HEADER...\n" + ctx.PROGRAM().getText() + " " + ctx.ID().getText() + ctx.SEMICOLON().getText() + "\n\nPROGRAM_BLOCK...";
         if (ctx.var_block() != null)
         {
             str += this.visitVar_block(ctx.var_block());
@@ -172,7 +172,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitInstrWhileLoop(MiniPascalParser.InstrWhileLoopContext ctx) {
-        return this.visitWhile_loop(ctx.while_loop()) + "\n";
+        return ctx.while_loop().getText() + "\n";
     }
 
     @Override
@@ -182,7 +182,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitIntrIfStmt(MiniPascalParser.IntrIfStmtContext ctx) {
-        return this.visitIf_statement(ctx.if_statement()) + "\n";
+        return ctx.if_statement().getText()+ "\n";
     }
 
     @Override
@@ -199,9 +199,9 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
         {
             str += ctx.COMMA().getText();
 
-            if (ctx.math_expr().getText() != null)
+            if (ctx.expr().getText() != null)
             {
-                str += ctx.math_expr().getText();
+                str += ctx.expr().getText();
             }
             else if (ctx.STR().getText() != null)
             {
@@ -226,9 +226,9 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
         {
            str += ctx.COMMA().getText();
 
-           if (ctx.math_expr().getText() != null)
+           if (ctx.expr().getText() != null)
            {
-               str += ctx.math_expr().getText();
+               str += ctx.expr().getText();
            }
            else if (ctx.STR().getText() != null)
            {
@@ -290,39 +290,6 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
     }
 
     @Override
-    public String visitWhile_loop(MiniPascalParser.While_loopContext ctx) {
-        String str = ctx.WHILE().getText() + ctx.LEFTPAREN().getText()
-                + ctx.expr(0).getText() + ctx.comparison().getText() + ctx.expr(1).getText()
-                + ctx.RIGHTPAREN().getText() + ctx.DO().getText() + ctx.BEGIN().getText();
-
-        for (int i = 0; i < ctx.instr().size(); i++)
-        {
-            str += ctx.instr(i).getText();
-        }
-
-        str += ctx.END().getText() + ctx.SEMICOLON().getText() + "\n";
-        return str;
-    }
-
-    @Override
-    public String visitRepeat_loop(MiniPascalParser.Repeat_loopContext ctx) {
-        String str = ctx.REPEAT().getText();
-
-        for (int i = 0; i < ctx.instr().size(); i++)
-        {
-            str += ctx.instr(i).getText();
-        }
-
-        str += ctx.UNTIL().getText() + ctx.bool_expr().getText() + ctx.SEMICOLON().getText() + "\n";
-        return str;
-    }
-
-    @Override
-    public String visitIf_statement(MiniPascalParser.If_statementContext ctx) {
-        return ctx.getText() + "\n";
-    }
-
-    @Override
     public String visitIf_condition(MiniPascalParser.If_conditionContext ctx) {
         String str = ctx.expr(0).getText();
 
@@ -335,6 +302,125 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
         }
 
         return str + "\n";
+    }
+
+    @Override
+    public String visitWhile_loopSingle(MiniPascalParser.While_loopSingleContext ctx) {
+        return ctx.WHILE().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.DO().getText() + ctx.instr().getText()
+                + ctx.SEMICOLON().getText();
+    }
+
+    @Override
+    public String visitWhile_loopBE(MiniPascalParser.While_loopBEContext ctx) {
+        String str = ctx.WHILE().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.DO().getText() + ctx.BEGIN().getText();
+
+        for (int i = 0; i < ctx.instr().size(); i++)
+        {
+            str += ctx.instr(i).getText();
+        }
+
+        str += ctx.END().getText() + ctx.SEMICOLON().getText();
+        return str;
+    }
+
+    @Override
+    public String visitRepeat_loop(MiniPascalParser.Repeat_loopContext ctx) {
+        String str = ctx.REPEAT().getText();
+
+        for (int i = 0; i < ctx.instr().size(); i++)
+        {
+            str += ctx.instr(i).getText();
+        }
+
+        str += ctx.UNTIL().getText() + this.visitIf_condition(ctx.if_condition()) + ctx.SEMICOLON().getText() + "\n";
+        return str;
+    }
+
+    @Override
+    public String visitIf_statementSingle(MiniPascalParser.If_statementSingleContext ctx) {
+        String str = ctx.IF().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.THEN().getText() + ctx.instr().getText();
+
+        if(ctx.else_if() != null)
+        {
+            for (int i = 0; i < ctx.else_if().size(); i++)
+            {
+                str += ctx.else_if(i).getText();
+            }
+        }
+
+        if(ctx.else_statement() != null)
+        {
+            str += ctx.else_statement().getText();
+        }
+        return str;
+    }
+
+    @Override
+    public String visitIf_statementBE(MiniPascalParser.If_statementBEContext ctx) {
+        String str = ctx.IF().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.THEN().getText() + ctx.BEGIN().getText();
+
+        for (int i = 0; i < ctx.instr().size(); i++)
+        {
+            str += ctx.instr(i).getText();
+        }
+
+        str += ctx.END().getText() + ctx.SEMICOLON().getText();
+
+        if(ctx.else_if() != null)
+        {
+            for (int i = 0; i < ctx.else_if().size(); i++)
+            {
+                str += ctx.else_if(i).getText();
+            }
+        }
+
+        if(ctx.else_statement() != null)
+        {
+            str += ctx.else_statement().getText();
+        }
+        return str;
+    }
+
+    @Override
+    public String visitElse_ifSingle(MiniPascalParser.Else_ifSingleContext ctx) {
+        return ctx.ELSEIF().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.THEN().getText() + ctx.instr().getText();
+    }
+
+    @Override
+    public String visitElse_ifBE(MiniPascalParser.Else_ifBEContext ctx) {
+        String str = ctx.ELSEIF().getText() + ctx.LEFTPAREN().getText() + this.visitIf_condition(ctx.if_condition())
+                + ctx.RIGHTPAREN().getText() + ctx.THEN().getText() + ctx.BEGIN().getText();
+
+        for (int i = 0; i < ctx.instr().size(); i++)
+        {
+            str += ctx.instr(i).getText();
+        }
+
+        str += ctx.END().getText() + ctx.SEMICOLON().getText() + "\n";
+        return str;
+    }
+
+    @Override
+    public String visitElse_statementSingle(MiniPascalParser.Else_statementSingleContext ctx) {
+        return ctx.ELSE().getText() + ctx.instr().getText();
+    }
+
+    @Override
+    public String visitElse_statementBE(MiniPascalParser.Else_statementBEContext ctx) {
+        String str = ctx.ELSE().getText() + ctx.BEGIN().getText();
+
+        for (int i = 0; i < ctx.instr().size(); i++)
+        {
+            str += ctx.instr(i).getText();
+        }
+
+        str += ctx.END().getText() + ctx.SEMICOLON().getText();
+        return str;
     }
 
     @Override
@@ -429,14 +515,15 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitVar_initArray(MiniPascalParser.Var_initArrayContext ctx) {
-        String str = ctx.ID().getText() + ctx.LEFTBRACKET().getText() + ctx.math_expr(0).getText();
-
-        if (ctx.math_expr().size() > 1)
+        String str = ctx.ID().getText() + ctx.LEFTBRACKET().getText() + ctx.expr(0).getText();
+        int numExprs = 1;
+        if (ctx.expr().size() > 1)
         {
-            str += ctx.COMMA().getText() + ctx.math_expr(1).getText();
+            str += ctx.COMMA().getText() + ctx.expr(numExprs).getText();
+            numExprs += 1;
         }
 
-        str += ctx.RIGHTBRACKET() + ctx.ASSIGN().getText() + ctx.expr().getText() + ctx.SEMICOLON().getText();
+        str += ctx.RIGHTBRACKET() + ctx.ASSIGN().getText() + ctx.expr(numExprs).getText() + ctx.SEMICOLON().getText();
         return str;
     }
 
@@ -477,11 +564,11 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitArray_ID(MiniPascalParser.Array_IDContext ctx) {
-        String str = ctx.ID().getText() + ctx.LEFTBRACKET().getText() + ctx.math_expr(0).getText();
+        String str = ctx.ID().getText() + ctx.LEFTBRACKET().getText() + ctx.expr(0).getText();
 
-        if (ctx.math_expr().size() > 1)
+        if (ctx.expr().size() > 1)
         {
-            str += ctx.COMMA().getText() + ctx.math_expr(1).getText();
+            str += ctx.COMMA().getText() + ctx.expr(1).getText();
         }
 
         str += ctx.RIGHTBRACKET();
@@ -499,18 +586,80 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
     }
 
     @Override
-    public String visitExprMath(MiniPascalParser.ExprMathContext ctx) {
-        return ctx.math_expr().getText();
+    public String visitExprParen(MiniPascalParser.ExprParenContext ctx) {
+        return ctx.LEFTPAREN().getText() + ctx.expr().getText() + ctx.RIGHTPAREN().getText();
     }
 
     @Override
-    public String visitExprBool(MiniPascalParser.ExprBoolContext ctx) {
-        return ctx.bool_expr().getText();
+    public String visitExprFactorMath(MiniPascalParser.ExprFactorMathContext ctx) {
+        String str = ctx.expr(0).getText();
+
+        if (ctx.ASTERISK() != null)
+        {
+            str += ctx.ASTERISK().getText();
+        }
+        else if (ctx.SLASH() != null)
+        {
+            str += ctx.SLASH().getText();
+        }
+        else if (ctx.DIV() != null)
+        {
+            str += ctx.DIV().getText();
+        }
+        else if (ctx.MOD() != null)
+        {
+            str += ctx.MOD().getText();
+        }
+
+        str += ctx.expr(1).getText();
+        return str;
     }
 
     @Override
-    public String visitExprId(MiniPascalParser.ExprIdContext ctx) {
-        return ctx.ID().getText();
+    public String visitExprNegative(MiniPascalParser.ExprNegativeContext ctx) {
+        return ctx.MINUS().getText() + ctx.expr().getText();
+    }
+
+    @Override
+    public String visitExprTermMath(MiniPascalParser.ExprTermMathContext ctx) {
+        String str = ctx.expr(0).getText();
+
+        if (ctx.PLUS() != null)
+        {
+            str += ctx.PLUS().getText();
+        }
+        else if (ctx.MINUS() != null)
+        {
+            str += ctx.MINUS().getText();
+        }
+
+        str += ctx.expr(1).getText();
+        return str;
+    }
+
+    @Override
+    public String visitExprComparison(MiniPascalParser.ExprComparisonContext ctx) {
+        return ctx.expr(0).getText() + ctx.comparison().getText() + ctx.expr(1).getText();
+    }
+
+    @Override
+    public String visitExprLogical(MiniPascalParser.ExprLogicalContext ctx) {
+        return ctx.expr(0).getText() + ctx.logical_opr().getText() + ctx.expr(1).getText();
+    }
+
+    @Override
+    public String visitExprNot(MiniPascalParser.ExprNotContext ctx) {
+        return ctx.NOT().getText() + ctx.expr().getText();
+    }
+
+    @Override
+    public String visitExprDecimal(MiniPascalParser.ExprDecimalContext ctx) {
+        return ctx.DECIMAL().getText();
+    }
+
+    @Override
+    public String visitExprNum(MiniPascalParser.ExprNumContext ctx) {
+        return ctx.DIGIT().getText();
     }
 
     @Override
@@ -519,123 +668,18 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
     }
 
     @Override
-    public String visitMathSlash(MiniPascalParser.MathSlashContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.SLASH().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathSuma(MiniPascalParser.MathSumaContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.PLUS().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathRealNum(MiniPascalParser.MathRealNumContext ctx) {
-        return ctx.REALNUM().getText();
-    }
-
-    @Override
-    public String visitMathResta(MiniPascalParser.MathRestaContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MINUS().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathParen(MiniPascalParser.MathParenContext ctx) {
-        return ctx.LEFTPAREN().getText() + ctx.math_expr().getText() + ctx.RIGHTPAREN().getText();
-    }
-
-    @Override
-    public String visitMathDiv(MiniPascalParser.MathDivContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.DIV().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathMod(MiniPascalParser.MathModContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MOD().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathMul(MiniPascalParser.MathMulContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.ASTERISK().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitMathArrayId(MiniPascalParser.MathArrayIdContext ctx) {
+    public String visitExprArrayId(MiniPascalParser.ExprArrayIdContext ctx) {
         return this.visitArray_ID(ctx.array_ID());
     }
 
     @Override
-    public String visitMathId(MiniPascalParser.MathIdContext ctx) {
+    public String visitExprId(MiniPascalParser.ExprIdContext ctx) {
         return ctx.ID().getText();
     }
 
     @Override
-    public String visitMathDecimal(MiniPascalParser.MathDecimalContext ctx) {
-        return ctx.DECIMAL().getText();
-    }
-
-    @Override
-    public String visitBoolOr(MiniPascalParser.BoolOrContext ctx) {
-        return ctx.bool_expr(0).getText() + ctx.OR().getText() + ctx.bool_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolMathMayor(MiniPascalParser.BoolMathMayorContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MAYORQUE().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolMathMenorIgual(MiniPascalParser.BoolMathMenorIgualContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MENORIGUAL().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolParen(MiniPascalParser.BoolParenContext ctx) {
-        return ctx.LEFTPAREN().getText() + ctx.bool_expr().getText() + ctx.RIGHTPAREN().getText();
-    }
-
-    @Override
-    public String visitBoolMathIgual(MiniPascalParser.BoolMathIgualContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.IGUAL().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolArrayId(MiniPascalParser.BoolArrayIdContext ctx) {
-        return this.visitArray_ID(ctx.array_ID());
-    }
-
-    @Override
-    public String visitBoolVal(MiniPascalParser.BoolValContext ctx) {
-        return ctx.BOOL_VAL().getText();
-    }
-
-    @Override
-    public String visitBoolId(MiniPascalParser.BoolIdContext ctx) {
-        return ctx.ID().getText();
-    }
-
-    @Override
-    public String visitBoolNot(MiniPascalParser.BoolNotContext ctx) {
-        return ctx.NOT().getText() + ctx.bool_expr().getText();
-    }
-
-    @Override
-    public String visitBoolMathMenor(MiniPascalParser.BoolMathMenorContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MENORQUE().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolAnd(MiniPascalParser.BoolAndContext ctx) {
-        return ctx.bool_expr(0).getText() + ctx.AND().getText() + ctx.bool_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolMathMayorIgual(MiniPascalParser.BoolMathMayorIgualContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.MAYORIGUAL().getText() + ctx.math_expr(1).getText();
-    }
-
-    @Override
-    public String visitBoolMathDistinto(MiniPascalParser.BoolMathDistintoContext ctx) {
-        return ctx.math_expr(0).getText() + ctx.DISTINTO().getText() + ctx.math_expr(1).getText();
+    public String visitSize(MiniPascalParser.SizeContext ctx) {
+        return ctx.expr(0).getText() + ".." + ctx.expr(1).getText();
     }
 
     @Override
@@ -676,10 +720,5 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
     @Override
     public String visitLogical_oprOr(MiniPascalParser.Logical_oprOrContext ctx) {
         return ctx.OR().getText();
-    }
-
-    @Override
-    public String visitSize(MiniPascalParser.SizeContext ctx) {
-        return ctx.math_expr(0).getText() + ".." + ctx.math_expr(1).getText();
     }
 }

@@ -101,8 +101,8 @@ if_condition
     ;
 
 while_loop
-    : WHILE LEFTPAREN if_condition RIGHTPAREN DO instr SEMICOLON
-    | WHILE LEFTPAREN if_condition RIGHTPAREN DO (BEGIN instr+ END SEMICOLON)
+    : WHILE LEFTPAREN if_condition RIGHTPAREN DO instr SEMICOLON                #while_loopSingle
+    | WHILE LEFTPAREN if_condition RIGHTPAREN DO (BEGIN instr+ END SEMICOLON)   #while_loopBE
     ;
 
 repeat_loop
@@ -110,18 +110,18 @@ repeat_loop
     ;
 
 if_statement
-    : IF LEFTPAREN if_condition RIGHTPAREN THEN instr else_if* else_statement?    #if_single
-    | IF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON) else_if* else_statement?       #if_then_elseBE
+    : IF LEFTPAREN if_condition RIGHTPAREN THEN instr else_if* else_statement?    #if_statementSingle
+    | IF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON) else_if* else_statement?       #if_statementBE
     ;
 
 else_if
-    : ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (instr)
-    | ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON)
+    : ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (instr)                         #else_ifSingle
+    | ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON)    #else_ifBE
     ;
 
 else_statement
-    : ELSE (instr)
-    | ELSE (BEGIN instr+ END SEMICOLON)
+    : ELSE (instr)                          #else_statementSingle
+    | ELSE (BEGIN instr+ END SEMICOLON)     #else_statementBE
     ;
 
 
@@ -149,7 +149,7 @@ var_decl
 
 //INICIALIZACION DE VARIABLES
 var_init
-    : ID ASSIGN expr SEMICOLON                                                          #var_initialize
+    : ID ASSIGN expr SEMICOLON                                                #var_initialize
     | ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET ASSIGN expr SEMICOLON    #var_initArray
     ;
 
@@ -178,18 +178,18 @@ const_type
 
 //------------------------------------------------------EXPRESIONES------------------------------------------------------
 expr
-    : LEFTPAREN expr RIGHTPAREN              #exprParen
-    | expr (ASTERISK | SLASH | DIV | MOD) expr    #exprFactorMath
-    | MINUS expr                             #exprNeg
-    | expr (PLUS | MINUS) expr               #exprTermMath
-    | expr comparison expr                   #exprComparison
-    | expr logical_opr expr                   #exprLogical
-    | NOT expr                               #exprNot
-    | DECIMAL                                #exprDecimal
-    | DIGIT                                  #exprNum
-    | STR                                    #exprStr
-    | array_ID                               #exprArrayId
-    | ID                                     #exprId
+    : LEFTPAREN expr RIGHTPAREN                 #exprParen
+    | expr (ASTERISK | SLASH | DIV | MOD) expr  #exprFactorMath
+    | MINUS expr                                #exprNegative
+    | expr (PLUS | MINUS) expr                  #exprTermMath
+    | expr comparison expr                      #exprComparison
+    | expr logical_opr expr                     #exprLogical
+    | NOT expr                                  #exprNot
+    | DECIMAL                                   #exprDecimal
+    | DIGIT                                     #exprNum
+    | STR                                       #exprStr
+    | array_ID                                  #exprArrayId
+    | ID                                        #exprId
     ;
 
 size    : expr '..' expr;

@@ -76,7 +76,7 @@ public class Main {
                 String error_color = "\033[31m";
 
                 System.out.println(error_color + "Error Sintactico: " + line + ":" + charPositionInLine + " " + msgTranslated);
-                underlineError(recognizer,(Token)offendingSymbol, line, charPositionInLine);
+                //underlineError(recognizer,(Token)offendingSymbol, line, charPositionInLine);
             }
             public  void underlineError(Recognizer recognizer,
                                         Token offendingToken, int line,

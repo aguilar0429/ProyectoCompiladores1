@@ -6,7 +6,7 @@ program ciclos;
 	s:String;
 	Function f():Integer;
 	 Begin 
-		f := 3; 
+		f := 3;
  	end;
 begin   
 	{iniciamos las variables}

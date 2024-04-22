@@ -32,12 +32,12 @@ options {
 program: program_block EOF #programSingle;
 
 program_block: PROGRAM ID SEMICOLON
-//    var_block? //Bloque de Variables globales
-//    function_block? //Bloque de Funciones
-//    BEGIN instr+ END PERIOD//Este seria el main
-//    #program_blockSingle
-//    ;
-    expr #program_blockSingle;
+    var_block? //Bloque de Variables globales
+    function_block? //Bloque de Funciones
+    BEGIN instr+ END PERIOD//Este seria el main
+    #program_blockSingle
+    ;
+//    expr #program_blockSingle;
 
 //------------------------------------------------------FUNCIONES-------------------------------------------------------
 

@@ -7,3 +7,6 @@ antlr-runtime-4.13.1.jar
 *.class
 *.tokens
 *.interp
+.idea/misc.xml
+/.idea
+ProyectoCompi1.iml

@@ -29,13 +29,15 @@ options {
 // | | Asignacion de variables con tipos incompatibles.
 // | | Strings deben tener un maximo de 255 caracteres.
 
-program: program_block EOF;
+program: program_block EOF #programSingle;
 
 program_block: PROGRAM ID SEMICOLON
-    var_block? //Bloque de Variables globales
-    function_block? //Bloque de Funciones
-    BEGIN instr+ END PERIOD//Este seria el main
-    ;
+//    var_block? //Bloque de Variables globales
+//    function_block? //Bloque de Funciones
+//    BEGIN instr+ END PERIOD//Este seria el main
+//    #program_blockSingle
+//    ;
+    expr #program_blockSingle;
 
 //------------------------------------------------------FUNCIONES-------------------------------------------------------
 
@@ -47,10 +49,11 @@ function_block
             instr+
         END SEMICOLON // puse el begin y end entre punto y coma afuera para poder utilizar function_body en otras cosas como el main
       )+
+      #function_blockSingle
     ;
 
 function_call
-    : ID LEFTPAREN (expr (COMMA expr)*)? RIGHTPAREN SEMICOLON
+    : ID LEFTPAREN (expr (COMMA expr)*)? RIGHTPAREN SEMICOLON       #function_callSingle
     ;
 
 function_var_decl
@@ -77,7 +80,7 @@ instr
 //-----------------------------------------------READS Y WRITES-------------------------------------------------
 
 read_call
-    : READ LEFTPAREN ID RIGHTPAREN SEMICOLON
+    : READ LEFTPAREN ID RIGHTPAREN SEMICOLON                              #read_callSingle
     ;
 
 write_call
@@ -128,7 +131,7 @@ else_statement
 //------------------------------------------------------VARIABLES-------------------------------------------------------
 //BLOCK DE VARIABLES CON UN SOLO VAR Y VARIAS DECLARACIONES
 var_block
-    : VAR (var_decl)+
+    : VAR (var_decl)+   #var_blockSingle
     ;
 
 //DECLARACION DE VARIABLES DENTRO DE UN BLOQUE
@@ -138,13 +141,6 @@ var_decl
     | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type SEMICOLON    #var_declArray
     | ID COLON const_type ASSIGN CONST_VAL SEMICOLON    #var_declConst
     | ID (COMMA ID)* COLON const_type SEMICOLON         #var_declConstMultiple
-    //Puse las demas opciones comentadas ya que pienso que son parte del analisis semantico, no del analisis sintactico
-    //| ID (COMMA ID)* COLON STRING ASSIGN STR SEMICOLON
-    //| ID (COMMA ID)*  INTEGER ASSIGN REALNUM SEMICOLON
-    //| ID COLON ARRAY LEFTBRACKET REALNUM '..' REALNUM RIGHTBRACKET OF var_type SEMICOLON
-    //| ID (COMMA ID)* COLON CHARACTER ASSIGN CHAR SEMICOLON
-    //| ID (COMMA ID)* COLON BOOLEAN ASSIGN BOOL_VAL SEMICOLON
-    // ID COLON var_type ASSIGN expr SEMICOLON
     ;
 
 //INICIALIZACION DE VARIABLES
@@ -168,7 +164,7 @@ array_type
     ;
 
 array_ID
-    : ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET
+    : ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET        #arrayID
     ;
 
 const_type
@@ -192,7 +188,7 @@ expr
     | ID                                        #exprId
     ;
 
-size    : expr '..' expr;
+size    : expr '..' expr    #sizeRange;
 
 comparison
     : MAYORQUE      #comparisonMayor

@@ -29,13 +29,13 @@ options {
 // | | Asignacion de variables con tipos incompatibles.
 // | | Strings deben tener un maximo de 255 caracteres.
 
-program: program_block EOF #programSingle;
+program: program_block EOF ;
 
 program_block: PROGRAM ID SEMICOLON
     var_block? //Bloque de Variables globales
     function_block? //Bloque de Funciones
     BEGIN instr+ END PERIOD//Este seria el main
-    #program_blockSingle
+
     ;
 //    expr #program_blockSingle;
 
@@ -49,30 +49,30 @@ function_block
             instr+
         END SEMICOLON // puse el begin y end entre punto y coma afuera para poder utilizar function_body en otras cosas como el main
       )+
-      #function_blockSingle
+
     ;
 
 function_call
-    : ID LEFTPAREN (expr (COMMA expr)*)? RIGHTPAREN SEMICOLON       #function_callSingle
+    : ID LEFTPAREN (expr (COMMA expr)*)? RIGHTPAREN SEMICOLON
     ;
 
 function_var_decl
-    : ID (COMMA ID)* COLON var_type     #function_var_declare
-    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type      #function_var_declArray
-    | ID (COMMA ID)* COLON const_type   #function_var_declConst
+    : ID (COMMA ID)* COLON var_type
+    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type
+    | ID (COMMA ID)* COLON const_type
     ;
 
 
 //------------------------------------------------------INSTRUCCIONES-------------------------------------------------------
 instr
-    : var_init          #instrVarInit
-    | function_call     #instrFunCall
-    | read_call         #instrReadCall
-    | write_call        #instrWriteCall
-    | for_loop          #instrForLoop
-    | while_loop        #instrWhileLoop
-    | repeat_loop       #instrRepeatLoop
-    | if_statement      #intrIfStmt
+    : var_init
+    | function_call
+    | read_call
+    | write_call
+    | for_loop
+    | while_loop
+    | repeat_loop
+    | if_statement
 
     //demas instrucciones que se puedan ejecutar como if, while, repeat, etc
     ;
@@ -80,12 +80,12 @@ instr
 //-----------------------------------------------READS Y WRITES-------------------------------------------------
 
 read_call
-    : READ LEFTPAREN ID RIGHTPAREN SEMICOLON                              #read_callSingle
+    : READ LEFTPAREN ID RIGHTPAREN SEMICOLON
     ;
 
 write_call
-    : WRITELN LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON    #write_callNewLine //Integer, char o string.
-    | WRITE LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON      #write_callNoNewLine //Integer, char o string.
+    : WRITELN LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON
+    | WRITE LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON
     ;
 
 //-----------------------------------------------CICLOS Y CONDICIONALES-------------------------------------------------
@@ -93,10 +93,10 @@ write_call
 //CICLO FOR
 //Fors que ejecutan mas de una instruccion deben ir entre begin y end
 for_loop
-    : FOR ID ASSIGN expr TO expr DO (instr)                             #for_loopToDo
-    | FOR ID ASSIGN expr TO expr DO (BEGIN instr+ END SEMICOLON)        #for_loopToDoBE
-    | FOR ID ASSIGN expr DOWNTO expr DO (instr)                         #for_loopDownTo
-    | FOR ID ASSIGN expr DOWNTO expr DO (BEGIN instr+ END SEMICOLON)    #for_loopDownToBE
+    : FOR ID ASSIGN expr TO expr DO (instr)
+    | FOR ID ASSIGN expr TO expr DO (BEGIN instr+ END SEMICOLON)
+    | FOR ID ASSIGN expr DOWNTO expr DO (instr)
+    | FOR ID ASSIGN expr DOWNTO expr DO (BEGIN instr+ END SEMICOLON)
     ;
 
 if_condition
@@ -104,8 +104,8 @@ if_condition
     ;
 
 while_loop
-    : WHILE LEFTPAREN if_condition RIGHTPAREN DO instr SEMICOLON                #while_loopSingle
-    | WHILE LEFTPAREN if_condition RIGHTPAREN DO (BEGIN instr+ END SEMICOLON)   #while_loopBE
+    : WHILE LEFTPAREN if_condition RIGHTPAREN DO instr SEMICOLON
+    | WHILE LEFTPAREN if_condition RIGHTPAREN DO (BEGIN instr+ END SEMICOLON)
     ;
 
 repeat_loop
@@ -113,95 +113,95 @@ repeat_loop
     ;
 
 if_statement
-    : IF LEFTPAREN if_condition RIGHTPAREN THEN instr else_if* else_statement?    #if_statementSingle
-    | IF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON) else_if* else_statement?       #if_statementBE
+    : IF LEFTPAREN if_condition RIGHTPAREN THEN instr else_if* else_statement?
+    | IF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON) else_if* else_statement?
     ;
 
 else_if
-    : ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (instr)                         #else_ifSingle
-    | ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON)    #else_ifBE
+    : ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (instr)
+    | ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON)
     ;
 
 else_statement
-    : ELSE (instr)                          #else_statementSingle
-    | ELSE (BEGIN instr+ END SEMICOLON)     #else_statementBE
+    : ELSE (instr)
+    | ELSE (BEGIN instr+ END SEMICOLON)
     ;
 
 
 //------------------------------------------------------VARIABLES-------------------------------------------------------
 //BLOCK DE VARIABLES CON UN SOLO VAR Y VARIAS DECLARACIONES
 var_block
-    : VAR (var_decl)+   #var_blockSingle
+    : VAR (var_decl)+
     ;
 
 //DECLARACION DE VARIABLES DENTRO DE UN BLOQUE
 var_decl
-    : ID COLON var_type ASSIGN expr SEMICOLON   #var_declare   //Probe en un compilador de pascal y no se puede asignar valor a mas de una variable a la vez
-    | ID (COMMA ID)* COLON var_type SEMICOLON   #var_declMultiple
-    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type SEMICOLON    #var_declArray
-    | ID COLON const_type ASSIGN CONST_VAL SEMICOLON    #var_declConst
-    | ID (COMMA ID)* COLON const_type SEMICOLON         #var_declConstMultiple
+    : ID COLON var_type ASSIGN expr SEMICOLON     //Probe en un compilador de pascal y no se puede asignar valor a mas de una variable a la vez
+    | ID (COMMA ID)* COLON var_type SEMICOLON
+    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type SEMICOLON
+    | ID COLON const_type ASSIGN CONST_VAL SEMICOLON
+    | ID (COMMA ID)* COLON const_type SEMICOLON
     ;
 
 //INICIALIZACION DE VARIABLES
 var_init
-    : ID ASSIGN expr SEMICOLON                                                #var_initialize
-    | ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET ASSIGN expr SEMICOLON    #var_initArray
+    : ID ASSIGN expr SEMICOLON
+    | ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET ASSIGN expr SEMICOLON
     ;
 
 //TIPOS DE VARIABLES`
 var_type
-    : INTEGER       #var_typeInt
-    | CHARACTER     #var_typeChar
-    | BOOLEAN       #var_typeBool
-    | STRING        #var_typeStr
+    : INTEGER
+    | CHARACTER
+    | BOOLEAN
+    | STRING
     ;
 
 array_type
-    : INTEGER       #array_typeInt
-    | CHARACTER     #array_typeChar
-    | BOOLEAN       #array_typeBool
+    : INTEGER
+    | CHARACTER
+    | BOOLEAN
     ;
 
 array_ID
-    : ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET        #arrayID
+    : ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET
     ;
 
 const_type
-    : CONSTCHAR     #const_typeChar
-    | CONSTSTR      #const_typeStr
+    : CONSTCHAR
+    | CONSTSTR
     ;
 
 //------------------------------------------------------EXPRESIONES------------------------------------------------------
 expr
-    : LEFTPAREN expr RIGHTPAREN                 #exprParen
-    | expr (ASTERISK | SLASH | DIV | MOD) expr  #exprFactorMath
-    | MINUS expr                                #exprNegative
-    | expr (PLUS | MINUS) expr                  #exprTermMath
-    | expr comparison expr                      #exprComparison
-    | expr logical_opr expr                     #exprLogical
-    | NOT expr                                  #exprNot
-    | DECIMAL                                   #exprDecimal
-    | DIGIT                                     #exprNum
-    | STR                                       #exprStr
-    | array_ID                                  #exprArrayId
-    | ID                                        #exprId
+    : LEFTPAREN expr RIGHTPAREN
+    | expr (ASTERISK | SLASH | DIV | MOD) expr
+    | MINUS expr
+    | expr (PLUS | MINUS) expr
+    | expr comparison expr
+    | expr logical_opr expr
+    | NOT expr
+    | DECIMAL
+    | DIGIT
+    | STR
+    | array_ID
+    | ID
     ;
 
-size    : expr '..' expr    #sizeRange;
+size    : expr '..' expr   ;
 
 comparison
-    : MAYORQUE      #comparisonMayor
-    | MENORQUE      #comparisonMenor
-    | MAYORIGUAL    #comparisonMayorIgual
-    | MENORIGUAL    #comparisonMenorIgual
-    | IGUAL         #comparisonIgual
-    | DISTINTO      #comparisonDistinto
+    : MAYORQUE
+    | MENORQUE
+    | MAYORIGUAL
+    | MENORIGUAL
+    | IGUAL
+    | DISTINTO
     ;
 
 logical_opr
-    : AND   #logical_oprAnd
-    | OR    #logical_oprOr
+    : AND
+    | OR
     ;
 
 

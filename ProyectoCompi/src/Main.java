@@ -97,9 +97,13 @@ public class Main {
         });
 
         ParseTree arbolito = parser.program();
-        MiniPascalNewVisitor visitante = new MiniPascalNewVisitor();
+        MiniPascalPrettyVisitor visitante = new MiniPascalPrettyVisitor();
         String str = visitante.visit(arbolito);
         System.out.println(ANSI_RESET + str  );
+
+        System.out.println("==================================");
+
+
     }
 
 }

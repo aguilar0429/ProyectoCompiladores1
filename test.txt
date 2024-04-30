@@ -23,7 +23,7 @@ begin
 	End;
 
 	{reiniciamos el contador}
-	cont := 1;
+	cont := 1 + 2;
 
 	{llenamos el arreglo unidimensional}
 	For i := 1 To x Do

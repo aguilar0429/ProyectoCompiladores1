@@ -566,6 +566,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
     public String visitArray_ID(MiniPascalParser.Array_IDContext ctx) {
         String str = ctx.ID().getText() + ctx.LEFTBRACKET().getText() + ctx.expr(0).getText();
 
+
         if (ctx.expr().size() > 1)
         {
             str += ctx.COMMA().getText() + ctx.expr(1).getText();
@@ -622,19 +623,31 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<String>
 
     @Override
     public String visitExprTermMath(MiniPascalParser.ExprTermMathContext ctx) {
-        String str = ctx.expr(0).getText();
+//        String str = ctx.expr(0).getText();
+//
+//        if (ctx.PLUS() != null)
+//        {
+//            str += ctx.PLUS().getText();
+//        }
+//        else if (ctx.MINUS() != null)
+//        {
+//            str += ctx.MINUS().getText();
+//        }
+//
+//        str += ctx.expr(1).getText();
+
+        int left = ctx != null ? Integer.parseInt(ctx.getText()) : 0;
+        int right = ctx != null ? Integer.parseInt(ctx.getText()) : 0;
 
         if (ctx.PLUS() != null)
         {
-            str += ctx.PLUS().getText();
+            return "INSIDE EXPRTERMATH" + Integer.toString(left + right);
         }
         else if (ctx.MINUS() != null)
         {
-            str += ctx.MINUS().getText();
+            return "INSIDE EXPRTERMATH" + Integer.toString(left - right);
         }
-
-        str += ctx.expr(1).getText();
-        return str;
+        return "INSIDE EXPRTERMATH" + Integer.toString(left);
     }
 
     @Override

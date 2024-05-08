@@ -867,6 +867,16 @@ public interface MiniPascalListener extends ParseTreeListener {
 	 */
 	void exitRepetetiveStatement(MiniPascalParser.RepetetiveStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniPascalParser#compoundWhileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompoundWhileStatement(MiniPascalParser.CompoundWhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniPascalParser#compoundWhileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompoundWhileStatement(MiniPascalParser.CompoundWhileStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniPascalParser#whileStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -886,6 +896,16 @@ public interface MiniPascalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRepeatStatement(MiniPascalParser.RepeatStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniPascalParser#compoundForStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniPascalParser#compoundForStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniPascalParser#forStatement}.
 	 * @param ctx the parse tree

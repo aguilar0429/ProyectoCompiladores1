@@ -384,6 +384,7 @@ compoundStatement
    : BEGIN statements END
    ;
 
+
 statements
    : statement (SEMICOLON statement)*
    ;
@@ -400,7 +401,7 @@ repetetiveStatement
    : compoundWhileStatement
    | whileStatement
    | repeatStatement
-   | compoundForStatement
+
    | forStatement
    ;
 
@@ -422,6 +423,7 @@ compoundForStatement
 
 forStatement
    : FOR identifier ASSIGN forList DO statement
+   | BEGIN forStatement END
    ;
 
 

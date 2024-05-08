@@ -24,488 +24,635 @@ public class MiniPascalBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProgram_block(MiniPascalParser.Program_blockContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProgramHeading(MiniPascalParser.ProgramHeadingContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction_block(MiniPascalParser.Function_blockContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdentifier(MiniPascalParser.IdentifierContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction_call(MiniPascalParser.Function_callContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBlock(MiniPascalParser.BlockContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction_var_declare(MiniPascalParser.Function_var_declareContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUsesUnitsPart(MiniPascalParser.UsesUnitsPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction_var_declArray(MiniPascalParser.Function_var_declArrayContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLabelDeclarationPart(MiniPascalParser.LabelDeclarationPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction_var_declConst(MiniPascalParser.Function_var_declConstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLabel(MiniPascalParser.LabelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrVarInit(MiniPascalParser.InstrVarInitContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstantDefinitionPart(MiniPascalParser.ConstantDefinitionPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrFunCall(MiniPascalParser.InstrFunCallContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstantDefinition(MiniPascalParser.ConstantDefinitionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrReadCall(MiniPascalParser.InstrReadCallContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstantChr(MiniPascalParser.ConstantChrContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrWriteCall(MiniPascalParser.InstrWriteCallContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstant(MiniPascalParser.ConstantContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrForLoop(MiniPascalParser.InstrForLoopContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnsignedNumber(MiniPascalParser.UnsignedNumberContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrWhileLoop(MiniPascalParser.InstrWhileLoopContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnsignedInteger(MiniPascalParser.UnsignedIntegerContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInstrRepeatLoop(MiniPascalParser.InstrRepeatLoopContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSign(MiniPascalParser.SignContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntrIfStmt(MiniPascalParser.IntrIfStmtContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBool_(MiniPascalParser.Bool_Context ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitRead_call(MiniPascalParser.Read_callContext ctx) { return visitChildren(ctx); }
+	@Override public T visitString(MiniPascalParser.StringContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWrite_callNewLine(MiniPascalParser.Write_callNewLineContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeDefinitionPart(MiniPascalParser.TypeDefinitionPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWrite_callNoNewLine(MiniPascalParser.Write_callNoNewLineContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeDefinition(MiniPascalParser.TypeDefinitionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFor_loopToDo(MiniPascalParser.For_loopToDoContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionType(MiniPascalParser.FunctionTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFor_loopToDoBE(MiniPascalParser.For_loopToDoBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProcedureType(MiniPascalParser.ProcedureTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFor_loopDownTo(MiniPascalParser.For_loopDownToContext ctx) { return visitChildren(ctx); }
+	@Override public T visitType_(MiniPascalParser.Type_Context ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFor_loopDownToBE(MiniPascalParser.For_loopDownToBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSimpleType(MiniPascalParser.SimpleTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIf_condition(MiniPascalParser.If_conditionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitScalarType(MiniPascalParser.ScalarTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWhile_loopSingle(MiniPascalParser.While_loopSingleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSubrangeType(MiniPascalParser.SubrangeTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWhile_loopBE(MiniPascalParser.While_loopBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeIdentifier(MiniPascalParser.TypeIdentifierContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitRepeat_loop(MiniPascalParser.Repeat_loopContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStructuredType(MiniPascalParser.StructuredTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIf_statementSingle(MiniPascalParser.If_statementSingleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnpackedStructuredType(MiniPascalParser.UnpackedStructuredTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIf_statementBE(MiniPascalParser.If_statementBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStringtype(MiniPascalParser.StringtypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElse_ifSingle(MiniPascalParser.Else_ifSingleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArrayType(MiniPascalParser.ArrayTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElse_ifBE(MiniPascalParser.Else_ifBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeList(MiniPascalParser.TypeListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElse_statementSingle(MiniPascalParser.Else_statementSingleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIndexType(MiniPascalParser.IndexTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElse_statementBE(MiniPascalParser.Else_statementBEContext ctx) { return visitChildren(ctx); }
+	@Override public T visitComponentType(MiniPascalParser.ComponentTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_block(MiniPascalParser.Var_blockContext ctx) { return visitChildren(ctx); }
+	@Override public T visitRecordType(MiniPascalParser.RecordTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_declare(MiniPascalParser.Var_declareContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFieldList(MiniPascalParser.FieldListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_declMultiple(MiniPascalParser.Var_declMultipleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFixedPart(MiniPascalParser.FixedPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_declArray(MiniPascalParser.Var_declArrayContext ctx) { return visitChildren(ctx); }
+	@Override public T visitRecordSection(MiniPascalParser.RecordSectionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_declConst(MiniPascalParser.Var_declConstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariantPart(MiniPascalParser.VariantPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_declConstMultiple(MiniPascalParser.Var_declConstMultipleContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTag(MiniPascalParser.TagContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_initialize(MiniPascalParser.Var_initializeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariant(MiniPascalParser.VariantContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_initArray(MiniPascalParser.Var_initArrayContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSetType(MiniPascalParser.SetTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_typeInt(MiniPascalParser.Var_typeIntContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBaseType(MiniPascalParser.BaseTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_typeChar(MiniPascalParser.Var_typeCharContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariableDeclarationPart(MiniPascalParser.VariableDeclarationPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_typeBool(MiniPascalParser.Var_typeBoolContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariableDeclaration(MiniPascalParser.VariableDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar_typeStr(MiniPascalParser.Var_typeStrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProcedureAndFunctionDeclarationPart(MiniPascalParser.ProcedureAndFunctionDeclarationPartContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_typeInt(MiniPascalParser.Array_typeIntContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProcedureOrFunctionDeclaration(MiniPascalParser.ProcedureOrFunctionDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_typeChar(MiniPascalParser.Array_typeCharContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProcedureDeclaration(MiniPascalParser.ProcedureDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_typeBool(MiniPascalParser.Array_typeBoolContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFormalParameterList(MiniPascalParser.FormalParameterListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_ID(MiniPascalParser.Array_IDContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFormalParameterSection(MiniPascalParser.FormalParameterSectionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitConst_typeChar(MiniPascalParser.Const_typeCharContext ctx) { return visitChildren(ctx); }
+	@Override public T visitParameterGroup(MiniPascalParser.ParameterGroupContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitConst_typeStr(MiniPascalParser.Const_typeStrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdentifierList(MiniPascalParser.IdentifierListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprArrayId(MiniPascalParser.ExprArrayIdContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstList(MiniPascalParser.ConstListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprParen(MiniPascalParser.ExprParenContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionDeclaration(MiniPascalParser.FunctionDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprTermMath(MiniPascalParser.ExprTermMathContext ctx) { return visitChildren(ctx); }
+	@Override public T visitResultType(MiniPascalParser.ResultTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprNot(MiniPascalParser.ExprNotContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStatement(MiniPascalParser.StatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprStr(MiniPascalParser.ExprStrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWriteStatement(MiniPascalParser.WriteStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprFactorMath(MiniPascalParser.ExprFactorMathContext ctx) { return visitChildren(ctx); }
+	@Override public T visitReadStatement(MiniPascalParser.ReadStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprComparison(MiniPascalParser.ExprComparisonContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWriteArguments(MiniPascalParser.WriteArgumentsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprId(MiniPascalParser.ExprIdContext ctx) { return visitChildren(ctx); }
+	@Override public T visitReadArguments(MiniPascalParser.ReadArgumentsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprLogical(MiniPascalParser.ExprLogicalContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnlabelledStatement(MiniPascalParser.UnlabelledStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprNum(MiniPascalParser.ExprNumContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSimpleStatement(MiniPascalParser.SimpleStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprNegative(MiniPascalParser.ExprNegativeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAssignmentStatement(MiniPascalParser.AssignmentStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprDecimal(MiniPascalParser.ExprDecimalContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariable(MiniPascalParser.VariableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSize(MiniPascalParser.SizeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExpression(MiniPascalParser.ExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonMayor(MiniPascalParser.ComparisonMayorContext ctx) { return visitChildren(ctx); }
+	@Override public T visitRelationaloperator(MiniPascalParser.RelationaloperatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonMenor(MiniPascalParser.ComparisonMenorContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSimpleExpression(MiniPascalParser.SimpleExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonMayorIgual(MiniPascalParser.ComparisonMayorIgualContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAdditiveoperator(MiniPascalParser.AdditiveoperatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonMenorIgual(MiniPascalParser.ComparisonMenorIgualContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTerm(MiniPascalParser.TermContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonIgual(MiniPascalParser.ComparisonIgualContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMultiplicativeoperator(MiniPascalParser.MultiplicativeoperatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparisonDistinto(MiniPascalParser.ComparisonDistintoContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSignedFactor(MiniPascalParser.SignedFactorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogical_oprAnd(MiniPascalParser.Logical_oprAndContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFactor(MiniPascalParser.FactorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogical_oprOr(MiniPascalParser.Logical_oprOrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnsignedConstant(MiniPascalParser.UnsignedConstantContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFunctionDesignator(MiniPascalParser.FunctionDesignatorContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitParameterList(MiniPascalParser.ParameterListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSet_(MiniPascalParser.Set_Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitElementList(MiniPascalParser.ElementListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitElement(MiniPascalParser.ElementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitProcedureStatement(MiniPascalParser.ProcedureStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitActualParameter(MiniPascalParser.ActualParameterContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitParameterwidth(MiniPascalParser.ParameterwidthContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEmptyStatement_(MiniPascalParser.EmptyStatement_Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStructuredStatement(MiniPascalParser.StructuredStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCompoundStatement(MiniPascalParser.CompoundStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStatements(MiniPascalParser.StatementsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitConditionalStatement(MiniPascalParser.ConditionalStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitIfStatement(MiniPascalParser.IfStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRepetetiveStatement(MiniPascalParser.RepetetiveStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitWhileStatement(MiniPascalParser.WhileStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRepeatStatement(MiniPascalParser.RepeatStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitForStatement(MiniPascalParser.ForStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitForList(MiniPascalParser.ForListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitInitialValue(MiniPascalParser.InitialValueContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFinalValue(MiniPascalParser.FinalValueContext ctx) { return visitChildren(ctx); }
 }

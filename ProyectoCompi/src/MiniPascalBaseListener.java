@@ -28,841 +28,1093 @@ public class MiniPascalBaseListener implements MiniPascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgram_block(MiniPascalParser.Program_blockContext ctx) { }
+	@Override public void enterProgramHeading(MiniPascalParser.ProgramHeadingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgram_block(MiniPascalParser.Program_blockContext ctx) { }
+	@Override public void exitProgramHeading(MiniPascalParser.ProgramHeadingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction_block(MiniPascalParser.Function_blockContext ctx) { }
+	@Override public void enterIdentifier(MiniPascalParser.IdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction_block(MiniPascalParser.Function_blockContext ctx) { }
+	@Override public void exitIdentifier(MiniPascalParser.IdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction_call(MiniPascalParser.Function_callContext ctx) { }
+	@Override public void enterBlock(MiniPascalParser.BlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction_call(MiniPascalParser.Function_callContext ctx) { }
+	@Override public void exitBlock(MiniPascalParser.BlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction_var_declare(MiniPascalParser.Function_var_declareContext ctx) { }
+	@Override public void enterUsesUnitsPart(MiniPascalParser.UsesUnitsPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction_var_declare(MiniPascalParser.Function_var_declareContext ctx) { }
+	@Override public void exitUsesUnitsPart(MiniPascalParser.UsesUnitsPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction_var_declArray(MiniPascalParser.Function_var_declArrayContext ctx) { }
+	@Override public void enterLabelDeclarationPart(MiniPascalParser.LabelDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction_var_declArray(MiniPascalParser.Function_var_declArrayContext ctx) { }
+	@Override public void exitLabelDeclarationPart(MiniPascalParser.LabelDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction_var_declConst(MiniPascalParser.Function_var_declConstContext ctx) { }
+	@Override public void enterLabel(MiniPascalParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction_var_declConst(MiniPascalParser.Function_var_declConstContext ctx) { }
+	@Override public void exitLabel(MiniPascalParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrVarInit(MiniPascalParser.InstrVarInitContext ctx) { }
+	@Override public void enterConstantDefinitionPart(MiniPascalParser.ConstantDefinitionPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrVarInit(MiniPascalParser.InstrVarInitContext ctx) { }
+	@Override public void exitConstantDefinitionPart(MiniPascalParser.ConstantDefinitionPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrFunCall(MiniPascalParser.InstrFunCallContext ctx) { }
+	@Override public void enterConstantDefinition(MiniPascalParser.ConstantDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrFunCall(MiniPascalParser.InstrFunCallContext ctx) { }
+	@Override public void exitConstantDefinition(MiniPascalParser.ConstantDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrReadCall(MiniPascalParser.InstrReadCallContext ctx) { }
+	@Override public void enterConstantChr(MiniPascalParser.ConstantChrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrReadCall(MiniPascalParser.InstrReadCallContext ctx) { }
+	@Override public void exitConstantChr(MiniPascalParser.ConstantChrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrWriteCall(MiniPascalParser.InstrWriteCallContext ctx) { }
+	@Override public void enterConstant(MiniPascalParser.ConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrWriteCall(MiniPascalParser.InstrWriteCallContext ctx) { }
+	@Override public void exitConstant(MiniPascalParser.ConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrForLoop(MiniPascalParser.InstrForLoopContext ctx) { }
+	@Override public void enterUnsignedNumber(MiniPascalParser.UnsignedNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrForLoop(MiniPascalParser.InstrForLoopContext ctx) { }
+	@Override public void exitUnsignedNumber(MiniPascalParser.UnsignedNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrWhileLoop(MiniPascalParser.InstrWhileLoopContext ctx) { }
+	@Override public void enterUnsignedInteger(MiniPascalParser.UnsignedIntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrWhileLoop(MiniPascalParser.InstrWhileLoopContext ctx) { }
+	@Override public void exitUnsignedInteger(MiniPascalParser.UnsignedIntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrRepeatLoop(MiniPascalParser.InstrRepeatLoopContext ctx) { }
+	@Override public void enterSign(MiniPascalParser.SignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrRepeatLoop(MiniPascalParser.InstrRepeatLoopContext ctx) { }
+	@Override public void exitSign(MiniPascalParser.SignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntrIfStmt(MiniPascalParser.IntrIfStmtContext ctx) { }
+	@Override public void enterBool_(MiniPascalParser.Bool_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntrIfStmt(MiniPascalParser.IntrIfStmtContext ctx) { }
+	@Override public void exitBool_(MiniPascalParser.Bool_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRead_call(MiniPascalParser.Read_callContext ctx) { }
+	@Override public void enterString(MiniPascalParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRead_call(MiniPascalParser.Read_callContext ctx) { }
+	@Override public void exitString(MiniPascalParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWrite_callNewLine(MiniPascalParser.Write_callNewLineContext ctx) { }
+	@Override public void enterTypeDefinitionPart(MiniPascalParser.TypeDefinitionPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWrite_callNewLine(MiniPascalParser.Write_callNewLineContext ctx) { }
+	@Override public void exitTypeDefinitionPart(MiniPascalParser.TypeDefinitionPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWrite_callNoNewLine(MiniPascalParser.Write_callNoNewLineContext ctx) { }
+	@Override public void enterTypeDefinition(MiniPascalParser.TypeDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWrite_callNoNewLine(MiniPascalParser.Write_callNoNewLineContext ctx) { }
+	@Override public void exitTypeDefinition(MiniPascalParser.TypeDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFor_loopToDo(MiniPascalParser.For_loopToDoContext ctx) { }
+	@Override public void enterFunctionType(MiniPascalParser.FunctionTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFor_loopToDo(MiniPascalParser.For_loopToDoContext ctx) { }
+	@Override public void exitFunctionType(MiniPascalParser.FunctionTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFor_loopToDoBE(MiniPascalParser.For_loopToDoBEContext ctx) { }
+	@Override public void enterProcedureType(MiniPascalParser.ProcedureTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFor_loopToDoBE(MiniPascalParser.For_loopToDoBEContext ctx) { }
+	@Override public void exitProcedureType(MiniPascalParser.ProcedureTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFor_loopDownTo(MiniPascalParser.For_loopDownToContext ctx) { }
+	@Override public void enterType_(MiniPascalParser.Type_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFor_loopDownTo(MiniPascalParser.For_loopDownToContext ctx) { }
+	@Override public void exitType_(MiniPascalParser.Type_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFor_loopDownToBE(MiniPascalParser.For_loopDownToBEContext ctx) { }
+	@Override public void enterSimpleType(MiniPascalParser.SimpleTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFor_loopDownToBE(MiniPascalParser.For_loopDownToBEContext ctx) { }
+	@Override public void exitSimpleType(MiniPascalParser.SimpleTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf_condition(MiniPascalParser.If_conditionContext ctx) { }
+	@Override public void enterScalarType(MiniPascalParser.ScalarTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf_condition(MiniPascalParser.If_conditionContext ctx) { }
+	@Override public void exitScalarType(MiniPascalParser.ScalarTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhile_loopSingle(MiniPascalParser.While_loopSingleContext ctx) { }
+	@Override public void enterSubrangeType(MiniPascalParser.SubrangeTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhile_loopSingle(MiniPascalParser.While_loopSingleContext ctx) { }
+	@Override public void exitSubrangeType(MiniPascalParser.SubrangeTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhile_loopBE(MiniPascalParser.While_loopBEContext ctx) { }
+	@Override public void enterTypeIdentifier(MiniPascalParser.TypeIdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhile_loopBE(MiniPascalParser.While_loopBEContext ctx) { }
+	@Override public void exitTypeIdentifier(MiniPascalParser.TypeIdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRepeat_loop(MiniPascalParser.Repeat_loopContext ctx) { }
+	@Override public void enterStructuredType(MiniPascalParser.StructuredTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRepeat_loop(MiniPascalParser.Repeat_loopContext ctx) { }
+	@Override public void exitStructuredType(MiniPascalParser.StructuredTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf_statementSingle(MiniPascalParser.If_statementSingleContext ctx) { }
+	@Override public void enterUnpackedStructuredType(MiniPascalParser.UnpackedStructuredTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf_statementSingle(MiniPascalParser.If_statementSingleContext ctx) { }
+	@Override public void exitUnpackedStructuredType(MiniPascalParser.UnpackedStructuredTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf_statementBE(MiniPascalParser.If_statementBEContext ctx) { }
+	@Override public void enterStringtype(MiniPascalParser.StringtypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf_statementBE(MiniPascalParser.If_statementBEContext ctx) { }
+	@Override public void exitStringtype(MiniPascalParser.StringtypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElse_ifSingle(MiniPascalParser.Else_ifSingleContext ctx) { }
+	@Override public void enterArrayType(MiniPascalParser.ArrayTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElse_ifSingle(MiniPascalParser.Else_ifSingleContext ctx) { }
+	@Override public void exitArrayType(MiniPascalParser.ArrayTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElse_ifBE(MiniPascalParser.Else_ifBEContext ctx) { }
+	@Override public void enterTypeList(MiniPascalParser.TypeListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElse_ifBE(MiniPascalParser.Else_ifBEContext ctx) { }
+	@Override public void exitTypeList(MiniPascalParser.TypeListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElse_statementSingle(MiniPascalParser.Else_statementSingleContext ctx) { }
+	@Override public void enterIndexType(MiniPascalParser.IndexTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElse_statementSingle(MiniPascalParser.Else_statementSingleContext ctx) { }
+	@Override public void exitIndexType(MiniPascalParser.IndexTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElse_statementBE(MiniPascalParser.Else_statementBEContext ctx) { }
+	@Override public void enterComponentType(MiniPascalParser.ComponentTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElse_statementBE(MiniPascalParser.Else_statementBEContext ctx) { }
+	@Override public void exitComponentType(MiniPascalParser.ComponentTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_block(MiniPascalParser.Var_blockContext ctx) { }
+	@Override public void enterRecordType(MiniPascalParser.RecordTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_block(MiniPascalParser.Var_blockContext ctx) { }
+	@Override public void exitRecordType(MiniPascalParser.RecordTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_declare(MiniPascalParser.Var_declareContext ctx) { }
+	@Override public void enterFieldList(MiniPascalParser.FieldListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_declare(MiniPascalParser.Var_declareContext ctx) { }
+	@Override public void exitFieldList(MiniPascalParser.FieldListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_declMultiple(MiniPascalParser.Var_declMultipleContext ctx) { }
+	@Override public void enterFixedPart(MiniPascalParser.FixedPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_declMultiple(MiniPascalParser.Var_declMultipleContext ctx) { }
+	@Override public void exitFixedPart(MiniPascalParser.FixedPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_declArray(MiniPascalParser.Var_declArrayContext ctx) { }
+	@Override public void enterRecordSection(MiniPascalParser.RecordSectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_declArray(MiniPascalParser.Var_declArrayContext ctx) { }
+	@Override public void exitRecordSection(MiniPascalParser.RecordSectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_declConst(MiniPascalParser.Var_declConstContext ctx) { }
+	@Override public void enterVariantPart(MiniPascalParser.VariantPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_declConst(MiniPascalParser.Var_declConstContext ctx) { }
+	@Override public void exitVariantPart(MiniPascalParser.VariantPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_declConstMultiple(MiniPascalParser.Var_declConstMultipleContext ctx) { }
+	@Override public void enterTag(MiniPascalParser.TagContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_declConstMultiple(MiniPascalParser.Var_declConstMultipleContext ctx) { }
+	@Override public void exitTag(MiniPascalParser.TagContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_initialize(MiniPascalParser.Var_initializeContext ctx) { }
+	@Override public void enterVariant(MiniPascalParser.VariantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_initialize(MiniPascalParser.Var_initializeContext ctx) { }
+	@Override public void exitVariant(MiniPascalParser.VariantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_initArray(MiniPascalParser.Var_initArrayContext ctx) { }
+	@Override public void enterSetType(MiniPascalParser.SetTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_initArray(MiniPascalParser.Var_initArrayContext ctx) { }
+	@Override public void exitSetType(MiniPascalParser.SetTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_typeInt(MiniPascalParser.Var_typeIntContext ctx) { }
+	@Override public void enterBaseType(MiniPascalParser.BaseTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_typeInt(MiniPascalParser.Var_typeIntContext ctx) { }
+	@Override public void exitBaseType(MiniPascalParser.BaseTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_typeChar(MiniPascalParser.Var_typeCharContext ctx) { }
+	@Override public void enterVariableDeclarationPart(MiniPascalParser.VariableDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_typeChar(MiniPascalParser.Var_typeCharContext ctx) { }
+	@Override public void exitVariableDeclarationPart(MiniPascalParser.VariableDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_typeBool(MiniPascalParser.Var_typeBoolContext ctx) { }
+	@Override public void enterVariableDeclaration(MiniPascalParser.VariableDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_typeBool(MiniPascalParser.Var_typeBoolContext ctx) { }
+	@Override public void exitVariableDeclaration(MiniPascalParser.VariableDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_typeStr(MiniPascalParser.Var_typeStrContext ctx) { }
+	@Override public void enterProcedureAndFunctionDeclarationPart(MiniPascalParser.ProcedureAndFunctionDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_typeStr(MiniPascalParser.Var_typeStrContext ctx) { }
+	@Override public void exitProcedureAndFunctionDeclarationPart(MiniPascalParser.ProcedureAndFunctionDeclarationPartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_typeInt(MiniPascalParser.Array_typeIntContext ctx) { }
+	@Override public void enterProcedureOrFunctionDeclaration(MiniPascalParser.ProcedureOrFunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray_typeInt(MiniPascalParser.Array_typeIntContext ctx) { }
+	@Override public void exitProcedureOrFunctionDeclaration(MiniPascalParser.ProcedureOrFunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_typeChar(MiniPascalParser.Array_typeCharContext ctx) { }
+	@Override public void enterProcedureDeclaration(MiniPascalParser.ProcedureDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray_typeChar(MiniPascalParser.Array_typeCharContext ctx) { }
+	@Override public void exitProcedureDeclaration(MiniPascalParser.ProcedureDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_typeBool(MiniPascalParser.Array_typeBoolContext ctx) { }
+	@Override public void enterFormalParameterList(MiniPascalParser.FormalParameterListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray_typeBool(MiniPascalParser.Array_typeBoolContext ctx) { }
+	@Override public void exitFormalParameterList(MiniPascalParser.FormalParameterListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_ID(MiniPascalParser.Array_IDContext ctx) { }
+	@Override public void enterFormalParameterSection(MiniPascalParser.FormalParameterSectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray_ID(MiniPascalParser.Array_IDContext ctx) { }
+	@Override public void exitFormalParameterSection(MiniPascalParser.FormalParameterSectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConst_typeChar(MiniPascalParser.Const_typeCharContext ctx) { }
+	@Override public void enterParameterGroup(MiniPascalParser.ParameterGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConst_typeChar(MiniPascalParser.Const_typeCharContext ctx) { }
+	@Override public void exitParameterGroup(MiniPascalParser.ParameterGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConst_typeStr(MiniPascalParser.Const_typeStrContext ctx) { }
+	@Override public void enterIdentifierList(MiniPascalParser.IdentifierListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConst_typeStr(MiniPascalParser.Const_typeStrContext ctx) { }
+	@Override public void exitIdentifierList(MiniPascalParser.IdentifierListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprArrayId(MiniPascalParser.ExprArrayIdContext ctx) { }
+	@Override public void enterConstList(MiniPascalParser.ConstListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprArrayId(MiniPascalParser.ExprArrayIdContext ctx) { }
+	@Override public void exitConstList(MiniPascalParser.ConstListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprParen(MiniPascalParser.ExprParenContext ctx) { }
+	@Override public void enterFunctionDeclaration(MiniPascalParser.FunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprParen(MiniPascalParser.ExprParenContext ctx) { }
+	@Override public void exitFunctionDeclaration(MiniPascalParser.FunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprTermMath(MiniPascalParser.ExprTermMathContext ctx) { }
+	@Override public void enterResultType(MiniPascalParser.ResultTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprTermMath(MiniPascalParser.ExprTermMathContext ctx) { }
+	@Override public void exitResultType(MiniPascalParser.ResultTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprNot(MiniPascalParser.ExprNotContext ctx) { }
+	@Override public void enterStatement(MiniPascalParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprNot(MiniPascalParser.ExprNotContext ctx) { }
+	@Override public void exitStatement(MiniPascalParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprStr(MiniPascalParser.ExprStrContext ctx) { }
+	@Override public void enterWriteStatement(MiniPascalParser.WriteStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprStr(MiniPascalParser.ExprStrContext ctx) { }
+	@Override public void exitWriteStatement(MiniPascalParser.WriteStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprFactorMath(MiniPascalParser.ExprFactorMathContext ctx) { }
+	@Override public void enterReadStatement(MiniPascalParser.ReadStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprFactorMath(MiniPascalParser.ExprFactorMathContext ctx) { }
+	@Override public void exitReadStatement(MiniPascalParser.ReadStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprComparison(MiniPascalParser.ExprComparisonContext ctx) { }
+	@Override public void enterWriteArguments(MiniPascalParser.WriteArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprComparison(MiniPascalParser.ExprComparisonContext ctx) { }
+	@Override public void exitWriteArguments(MiniPascalParser.WriteArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprId(MiniPascalParser.ExprIdContext ctx) { }
+	@Override public void enterReadArguments(MiniPascalParser.ReadArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprId(MiniPascalParser.ExprIdContext ctx) { }
+	@Override public void exitReadArguments(MiniPascalParser.ReadArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprLogical(MiniPascalParser.ExprLogicalContext ctx) { }
+	@Override public void enterUnlabelledStatement(MiniPascalParser.UnlabelledStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprLogical(MiniPascalParser.ExprLogicalContext ctx) { }
+	@Override public void exitUnlabelledStatement(MiniPascalParser.UnlabelledStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprNum(MiniPascalParser.ExprNumContext ctx) { }
+	@Override public void enterSimpleStatement(MiniPascalParser.SimpleStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprNum(MiniPascalParser.ExprNumContext ctx) { }
+	@Override public void exitSimpleStatement(MiniPascalParser.SimpleStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprNegative(MiniPascalParser.ExprNegativeContext ctx) { }
+	@Override public void enterAssignmentStatement(MiniPascalParser.AssignmentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprNegative(MiniPascalParser.ExprNegativeContext ctx) { }
+	@Override public void exitAssignmentStatement(MiniPascalParser.AssignmentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprDecimal(MiniPascalParser.ExprDecimalContext ctx) { }
+	@Override public void enterVariable(MiniPascalParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprDecimal(MiniPascalParser.ExprDecimalContext ctx) { }
+	@Override public void exitVariable(MiniPascalParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSize(MiniPascalParser.SizeContext ctx) { }
+	@Override public void enterExpression(MiniPascalParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSize(MiniPascalParser.SizeContext ctx) { }
+	@Override public void exitExpression(MiniPascalParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonMayor(MiniPascalParser.ComparisonMayorContext ctx) { }
+	@Override public void enterRelationaloperator(MiniPascalParser.RelationaloperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonMayor(MiniPascalParser.ComparisonMayorContext ctx) { }
+	@Override public void exitRelationaloperator(MiniPascalParser.RelationaloperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonMenor(MiniPascalParser.ComparisonMenorContext ctx) { }
+	@Override public void enterSimpleExpression(MiniPascalParser.SimpleExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonMenor(MiniPascalParser.ComparisonMenorContext ctx) { }
+	@Override public void exitSimpleExpression(MiniPascalParser.SimpleExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonMayorIgual(MiniPascalParser.ComparisonMayorIgualContext ctx) { }
+	@Override public void enterAdditiveoperator(MiniPascalParser.AdditiveoperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonMayorIgual(MiniPascalParser.ComparisonMayorIgualContext ctx) { }
+	@Override public void exitAdditiveoperator(MiniPascalParser.AdditiveoperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonMenorIgual(MiniPascalParser.ComparisonMenorIgualContext ctx) { }
+	@Override public void enterTerm(MiniPascalParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonMenorIgual(MiniPascalParser.ComparisonMenorIgualContext ctx) { }
+	@Override public void exitTerm(MiniPascalParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonIgual(MiniPascalParser.ComparisonIgualContext ctx) { }
+	@Override public void enterMultiplicativeoperator(MiniPascalParser.MultiplicativeoperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonIgual(MiniPascalParser.ComparisonIgualContext ctx) { }
+	@Override public void exitMultiplicativeoperator(MiniPascalParser.MultiplicativeoperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparisonDistinto(MiniPascalParser.ComparisonDistintoContext ctx) { }
+	@Override public void enterSignedFactor(MiniPascalParser.SignedFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparisonDistinto(MiniPascalParser.ComparisonDistintoContext ctx) { }
+	@Override public void exitSignedFactor(MiniPascalParser.SignedFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogical_oprAnd(MiniPascalParser.Logical_oprAndContext ctx) { }
+	@Override public void enterFactor(MiniPascalParser.FactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogical_oprAnd(MiniPascalParser.Logical_oprAndContext ctx) { }
+	@Override public void exitFactor(MiniPascalParser.FactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogical_oprOr(MiniPascalParser.Logical_oprOrContext ctx) { }
+	@Override public void enterUnsignedConstant(MiniPascalParser.UnsignedConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogical_oprOr(MiniPascalParser.Logical_oprOrContext ctx) { }
+	@Override public void exitUnsignedConstant(MiniPascalParser.UnsignedConstantContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionDesignator(MiniPascalParser.FunctionDesignatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionDesignator(MiniPascalParser.FunctionDesignatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParameterList(MiniPascalParser.ParameterListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParameterList(MiniPascalParser.ParameterListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSet_(MiniPascalParser.Set_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSet_(MiniPascalParser.Set_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElementList(MiniPascalParser.ElementListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElementList(MiniPascalParser.ElementListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElement(MiniPascalParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElement(MiniPascalParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterProcedureStatement(MiniPascalParser.ProcedureStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProcedureStatement(MiniPascalParser.ProcedureStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterActualParameter(MiniPascalParser.ActualParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitActualParameter(MiniPascalParser.ActualParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParameterwidth(MiniPascalParser.ParameterwidthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParameterwidth(MiniPascalParser.ParameterwidthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEmptyStatement_(MiniPascalParser.EmptyStatement_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmptyStatement_(MiniPascalParser.EmptyStatement_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStructuredStatement(MiniPascalParser.StructuredStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStructuredStatement(MiniPascalParser.StructuredStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCompoundStatement(MiniPascalParser.CompoundStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCompoundStatement(MiniPascalParser.CompoundStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStatements(MiniPascalParser.StatementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatements(MiniPascalParser.StatementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditionalStatement(MiniPascalParser.ConditionalStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionalStatement(MiniPascalParser.ConditionalStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfStatement(MiniPascalParser.IfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfStatement(MiniPascalParser.IfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRepetetiveStatement(MiniPascalParser.RepetetiveStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepetetiveStatement(MiniPascalParser.RepetetiveStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhileStatement(MiniPascalParser.WhileStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileStatement(MiniPascalParser.WhileStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRepeatStatement(MiniPascalParser.RepeatStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepeatStatement(MiniPascalParser.RepeatStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForStatement(MiniPascalParser.ForStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStatement(MiniPascalParser.ForStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForList(MiniPascalParser.ForListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForList(MiniPascalParser.ForListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInitialValue(MiniPascalParser.InitialValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInitialValue(MiniPascalParser.InitialValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFinalValue(MiniPascalParser.FinalValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFinalValue(MiniPascalParser.FinalValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -98,8 +98,29 @@ public class Main {
 
         ParseTree arbolito = parser.program();
         MiniPascalNewVisitor visitante = new MiniPascalNewVisitor();
-        String str = visitante.visit(arbolito);
+        Object str = visitante.visit(arbolito);
         System.out.println(ANSI_RESET + str  );
     }
 
 }
+/*
+@Override
+    public Void visitFunction(MiniPascalParser.FunctionContext ctx) {
+        symbolTables.get(scopeStack.peek().getName()).addSymbol(new ParametrizedSymbol(ctx.ID().getText(), ctx.TYPE().getText(), Symbol.Categ.FUNCTION));
+        tempParamSymb = symbolTables.get(scopeStack.peek().getName()).getSymbol(ctx.ID().getText());
+        scopeStack.push(new Scope(ctx.ID().getText(), scopeStack.peek()));
+        symbolTables.put(scopeStack.peek().getName(), new SymbolTable(scopeStack.peek()));
+        int paramSize = ctx.paramlist().size();
+        for (int i = 0; i < paramSize; i++) {
+            visit(ctx.paramlist(i));
+        }
+        tempParamSymb = null;
+        if (ctx.varblock() != null)
+            visit(ctx.varblock());
+        if (ctx.block() != null)
+            visit(ctx.block());
+
+        scopeStack.pop();
+        return null;
+    }
+ */

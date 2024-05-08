@@ -4,6 +4,7 @@ program ciclos;
 	    arreglo:Array[1..50] of Integer;
 	    arreglo_bidi: Array[1..10,1..5] of Integer;
 	s:String;
+	
 	Function f():Integer;
 	 Begin 
 		f := 3;

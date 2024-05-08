@@ -1,307 +1,575 @@
 grammar MiniPascal;
 
-options {
-    caseInsensitive = true;
-}
-// |X| == Hecho
-// |O| == Medio hecho, ocupa pruebas/modificaciones
-// | | == No hecho
+options { caseInsensitive = true; }
 
-//TO DO:
-// |X|  Comentarios { }: No anidadados y extendibles a varias lineas incluyendo el salto de linea
-// |X|  Variables: Declaracion de variables tipo entero, caracter, booleano y cadena hasta de 2 dimensiones. Tambien constantes. Lexcema :=
-// |X|  Operadores: Aritmeticos, relacionales y logicos.
-// |X|  Read y Write: Lectura y escritura de variables.
-// |X|  Funciones: Declaracion y uso de funciones con valores o referencias. Tambien recursividad.
-// |X|  Main: Funcion principal.
-// |X|  Manejo de errores: Errores lexicos.
-// |X|  Ciclos: Ciclos for while repeat y if.
+program
+   : programHeading (INTERFACE)? block DOT EOF
+   ;
 
+programHeading
+   : PROGRAM identifier (L_PAREN identifierList R_PAREN)? SEMICOLON
+   | UNIT identifier SEMICOLON
+   ;
 
-//BUGS A ARREGLAR:
-// |X| al instanciar variables, no se puede hacer algo como 5-9, porque agarra el -9 como realnum. Por ahora solo se puede hacer 5- 9.
-// |O| No estoy seguro de como se deben comportar los \n y demas caracteres de escape en las cadenas.
-// |X| En las condicionales (if) como no contiene begin y end, no se como cerrar el bloque.
+identifier
+   : ID
+   ;
 
+block
+   : (labelDeclarationPart | constantDefinitionPart | typeDefinitionPart | variableDeclarationPart | procedureAndFunctionDeclarationPart | usesUnitsPart | IMPLEMENTATION)* compoundStatement
+   ;
 
-// COSAS A CONSIDERAR PARA CUANDO HAGAMOS EL ANALISIS SEMANTICO:
-// | | No se pueden declarar variables con el mismo nombre que otra variable o funcion.
-// | | Asignacion de variables con tipos incompatibles.
-// | | Strings deben tener un maximo de 255 caracteres.
+usesUnitsPart
+   : USES identifierList SEMICOLON
+   ;
 
-program: program_block EOF;
+labelDeclarationPart
+   : LABEL label (COMMA label)* SEMICOLON
+   ;
 
-program_block: PROGRAM ID SEMICOLON
-    var_block? //Bloque de Variables globales
-    function_block? //Bloque de Funciones
-    BEGIN instr+ END PERIOD//Este seria el main
+label
+   : unsignedInteger
+   ;
+
+constantDefinitionPart
+   : CONST (constantDefinition SEMICOLON) +
+   ;
+
+constantDefinition
+   : identifier EQUAL constant
+   ;
+
+constantChr
+   : CHR L_PAREN unsignedInteger R_PAREN
+   ;
+
+constant
+   : unsignedNumber
+   | sign unsignedNumber
+   | identifier
+   | sign identifier
+   | string
+   | constantChr
+   ;
+
+unsignedNumber
+   : unsignedInteger
+   ;
+
+unsignedInteger
+   : NUM_INT
+   ;
+
+sign
+   : PLUS
+   | MINUS
+   ;
+
+bool_
+   : TRUE
+   | FALSE
+   ;
+
+string
+   : STRING_LITERAL
+   ;
+
+typeDefinitionPart
+   : TYPE (typeDefinition SEMICOLON) +
+   ;
+
+typeDefinition
+   : identifier EQUAL (type_ | functionType | procedureType)
+   ;
+
+functionType
+   : FUNCTION (formalParameterList)? COLON resultType
+   ;
+
+procedureType
+   : PROCEDURE (formalParameterList)?
+   ;
+
+type_
+   : simpleType
+   | structuredType
+   ;
+
+simpleType
+   : scalarType
+   | subrangeType
+   | typeIdentifier
+   | stringtype
+   ;
+
+scalarType
+   : L_PAREN identifierList R_PAREN
+   ;
+
+subrangeType
+   : constant DOUBLE_DOT constant
+   ;
+
+typeIdentifier
+   : identifier
+   | (CHAR | BOOLEAN | INTEGER | STRING)
+   ;
+
+structuredType
+   : PACKED unpackedStructuredType
+   | unpackedStructuredType
+   ;
+
+unpackedStructuredType
+   : arrayType
+   | recordType
+   | setType
+   ;
+
+stringtype
+   : STRING L_BRACK (identifier | unsignedNumber) R_BRACK
+   ;
+
+arrayType
+   : ARRAY L_BRACK typeList R_BRACK OF componentType
+   ;
+
+typeList
+   : indexType (COMMA indexType)*
+   ;
+
+indexType
+   : simpleType
+   ;
+
+componentType
+   : type_
+   ;
+
+recordType
+   : RECORD fieldList? END
+   ;
+
+fieldList
+   : fixedPart (SEMICOLON variantPart)?
+   | variantPart
+   ;
+
+fixedPart
+   : recordSection (SEMICOLON recordSection)*
+   ;
+
+recordSection
+   : identifierList COLON type_
+   ;
+
+variantPart
+   : CASE tag OF variant (SEMICOLON variant)*
+   ;
+
+tag
+   : identifier COLON typeIdentifier
+   | typeIdentifier
+   ;
+
+variant
+   : constList COLON L_PAREN fieldList R_PAREN
+   ;
+
+setType
+   : SET OF baseType
+   ;
+
+baseType
+   : simpleType
+   ;
+
+variableDeclarationPart
+   : VAR variableDeclaration (SEMICOLON variableDeclaration)* SEMICOLON
+   ;
+
+variableDeclaration
+   : identifierList COLON type_
+   ;
+
+procedureAndFunctionDeclarationPart
+   : procedureOrFunctionDeclaration SEMICOLON
+   ;
+
+procedureOrFunctionDeclaration
+   : procedureDeclaration
+   | functionDeclaration
+   ;
+
+procedureDeclaration
+   : PROCEDURE identifier (formalParameterList)? SEMICOLON block
+   ;
+
+formalParameterList
+   : L_PAREN formalParameterSection (SEMICOLON formalParameterSection)* R_PAREN
+   ;
+
+formalParameterSection
+   : parameterGroup
+   | VAR parameterGroup
+   | FUNCTION parameterGroup
+   | PROCEDURE parameterGroup
+   |
+   ;
+
+parameterGroup
+   : identifierList COLON typeIdentifier
+   ;
+
+identifierList
+   : identifier (COMMA identifier)*
+   ;
+
+constList
+   : constant (COMMA constant)*
+   ;
+
+functionDeclaration
+   : FUNCTION identifier (formalParameterList)? COLON resultType SEMICOLON block
+   ;
+
+resultType
+   : typeIdentifier
+   ;
+
+statement
+   : label COLON unlabelledStatement
+   | writeStatement
+   | readStatement
+   | unlabelledStatement
+   ;
+
+writeStatement
+    : WRITE L_PAREN writeArguments R_PAREN
+    | WRITELN L_PAREN writeArguments R_PAREN
     ;
 
-//------------------------------------------------------FUNCIONES-------------------------------------------------------
+readStatement
+   : READ L_PAREN readArguments R_PAREN
+   | READLN L_PAREN readArguments R_PAREN
+   ;
 
-//BLOCK DE FUNCIONES
-function_block
-    : (FUNCTION ID LEFTPAREN (function_var_decl (SEMICOLON function_var_decl)*)? RIGHTPAREN COLON var_type SEMICOLON
-        var_block? //Bloque de Variables locales
-        BEGIN
-            instr+
-        END SEMICOLON // puse el begin y end entre punto y coma afuera para poder utilizar function_body en otras cosas como el main
-      )+
+writeArguments
+    : expression (COMMA expression)*
     ;
 
-function_call
-    : ID LEFTPAREN (expr (COMMA expr)*)? RIGHTPAREN SEMICOLON
+readArguments
+    : variable (COMMA variable)*
     ;
 
-function_var_decl
-    : ID (COMMA ID)* COLON var_type     #function_var_declare
-    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type      #function_var_declArray
-    | ID (COMMA ID)* COLON const_type   #function_var_declConst
-    ;
+unlabelledStatement
+   : simpleStatement
+   | structuredStatement
+   ;
 
+simpleStatement
+   : assignmentStatement
+   | procedureStatement
+   | emptyStatement_
+   ;
 
-//------------------------------------------------------INSTRUCCIONES-------------------------------------------------------
-instr
-    : var_init          #instrVarInit
-    | function_call     #instrFunCall
-    | read_call         #instrReadCall
-    | write_call        #instrWriteCall
-    | for_loop          #instrForLoop
-    | while_loop        #instrWhileLoop
-    | repeat_loop       #instrRepeatLoop
-    | if_statement      #intrIfStmt
+assignmentStatement
+   : variable ASSIGN expression
+   ;
 
-    //demas instrucciones que se puedan ejecutar como if, while, repeat, etc
-    ;
+variable
+   : (AT identifier | identifier) (L_BRACK expression (COMMA expression)* R_BRACK | DOT identifier)*
+   ;
 
-//-----------------------------------------------READS Y WRITES-------------------------------------------------
+expression
+   : simpleExpression (relationaloperator expression)?
+   ;
 
-read_call
-    : READ LEFTPAREN ID RIGHTPAREN SEMICOLON
-    ;
+relationaloperator
+   : EQUAL
+   | NOT_EQUAL
+   | LT
+   | LE
+   | GE
+   | GT
+   ;
 
-write_call
-    : WRITELN LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON    #write_callNewLine //Integer, char o string.
-    | WRITE LEFTPAREN (CONST_VAL) (COMMA (expr|STR|ID))? RIGHTPAREN SEMICOLON      #write_callNoNewLine //Integer, char o string.
-    ;
+simpleExpression
+   : term (additiveoperator simpleExpression)?
+   ;
 
-//-----------------------------------------------CICLOS Y CONDICIONALES-------------------------------------------------
+additiveoperator
+   : PLUS
+   | MINUS
+   | OR
+   ;
 
-//CICLO FOR
-//Fors que ejecutan mas de una instruccion deben ir entre begin y end
-for_loop
-    : FOR ID ASSIGN expr TO expr DO (instr)                             #for_loopToDo
-    | FOR ID ASSIGN expr TO expr DO (BEGIN instr+ END SEMICOLON)        #for_loopToDoBE
-    | FOR ID ASSIGN expr DOWNTO expr DO (instr)                         #for_loopDownTo
-    | FOR ID ASSIGN expr DOWNTO expr DO (BEGIN instr+ END SEMICOLON)    #for_loopDownToBE
-    ;
+term
+   : signedFactor (multiplicativeoperator term)?
+   ;
 
-if_condition
-    : expr (logical_opr expr)*
-    ;
+multiplicativeoperator
+   : MULT
+   | SLASH // CONSULTAR
+   | DIV
+   | MOD
+   | AND
+   ;
 
-while_loop
-    : WHILE LEFTPAREN if_condition RIGHTPAREN DO instr SEMICOLON                #while_loopSingle
-    | WHILE LEFTPAREN if_condition RIGHTPAREN DO (BEGIN instr+ END SEMICOLON)   #while_loopBE
-    ;
+signedFactor
+   : (PLUS | MINUS)? factor
+   ;
 
-repeat_loop
-    : REPEAT instr+ UNTIL if_condition SEMICOLON
-    ;
+factor
+   : variable
+   | L_PAREN expression R_PAREN
+   | functionDesignator
+   | unsignedConstant
+   | set_
+   | NOT factor
+   | bool_
+   ;
 
-if_statement
-    : IF LEFTPAREN if_condition RIGHTPAREN THEN instr else_if* else_statement?    #if_statementSingle
-    | IF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON) else_if* else_statement?       #if_statementBE
-    ;
+unsignedConstant
+   : unsignedNumber
+   | constantChr
+   | string
+   | NIL
+   ;
 
-else_if
-    : ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (instr)                         #else_ifSingle
-    | ELSEIF LEFTPAREN if_condition RIGHTPAREN THEN (BEGIN instr+ END SEMICOLON)    #else_ifBE
-    ;
+functionDesignator
+   : identifier L_PAREN parameterList R_PAREN
+   ;
 
-else_statement
-    : ELSE (instr)                          #else_statementSingle
-    | ELSE (BEGIN instr+ END SEMICOLON)     #else_statementBE
-    ;
+parameterList
+   : actualParameter (COMMA actualParameter)*
+   ;
 
+set_
+   : L_BRACK elementList R_BRACK
+   ;
 
-//------------------------------------------------------VARIABLES-------------------------------------------------------
-//BLOCK DE VARIABLES CON UN SOLO VAR Y VARIAS DECLARACIONES
-var_block
-    : VAR (var_decl)+
-    ;
+elementList
+   : element (COMMA element)*
+   |
+   ;
 
-//DECLARACION DE VARIABLES DENTRO DE UN BLOQUE
-var_decl
-    : ID COLON var_type ASSIGN expr SEMICOLON   #var_declare   //Probe en un compilador de pascal y no se puede asignar valor a mas de una variable a la vez
-    | ID (COMMA ID)* COLON var_type SEMICOLON   #var_declMultiple
-    | ID (COMMA ID)* COLON ARRAY LEFTBRACKET size (COMMA size)? RIGHTBRACKET OF array_type SEMICOLON    #var_declArray
-    | ID COLON const_type ASSIGN CONST_VAL SEMICOLON    #var_declConst
-    | ID (COMMA ID)* COLON const_type SEMICOLON         #var_declConstMultiple
-    //Puse las demas opciones comentadas ya que pienso que son parte del analisis semantico, no del analisis sintactico
-    //| ID (COMMA ID)* COLON STRING ASSIGN STR SEMICOLON
-    //| ID (COMMA ID)*  INTEGER ASSIGN REALNUM SEMICOLON
-    //| ID COLON ARRAY LEFTBRACKET REALNUM '..' REALNUM RIGHTBRACKET OF var_type SEMICOLON
-    //| ID (COMMA ID)* COLON CHARACTER ASSIGN CHAR SEMICOLON
-    //| ID (COMMA ID)* COLON BOOLEAN ASSIGN BOOL_VAL SEMICOLON
-    // ID COLON var_type ASSIGN expr SEMICOLON
-    ;
+element
+   : expression (DOUBLE_DOT expression)?
+   ;
 
-//INICIALIZACION DE VARIABLES
-var_init
-    : ID ASSIGN expr SEMICOLON                                                #var_initialize
-    | ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET ASSIGN expr SEMICOLON    #var_initArray
-    ;
+procedureStatement
+   : identifier (L_PAREN parameterList R_PAREN)?
+   ;
 
-//TIPOS DE VARIABLES`
-var_type
-    : INTEGER       #var_typeInt
-    | CHARACTER     #var_typeChar
-    | BOOLEAN       #var_typeBool
-    | STRING        #var_typeStr
-    ;
+actualParameter
+   : expression parameterwidth*
+   ;
 
-array_type
-    : INTEGER       #array_typeInt
-    | CHARACTER     #array_typeChar
-    | BOOLEAN       #array_typeBool
-    ;
+parameterwidth
+   : COLON expression
+   ;
 
-array_ID
-    : ID LEFTBRACKET expr (COMMA expr)? RIGHTBRACKET
-    ;
+emptyStatement_
+   :
+   ;
 
-const_type
-    : CONSTCHAR     #const_typeChar
-    | CONSTSTR      #const_typeStr
-    ;
+structuredStatement
+   : compoundStatement
+   | conditionalStatement
+   | repetetiveStatement
+   ;
 
-//------------------------------------------------------EXPRESIONES------------------------------------------------------
-expr
-    : LEFTPAREN expr RIGHTPAREN                 #exprParen
-    | expr (ASTERISK | SLASH | DIV | MOD) expr  #exprFactorMath
-    | MINUS expr                                #exprNegative
-    | expr (PLUS | MINUS) expr                  #exprTermMath
-    | expr comparison expr                      #exprComparison
-    | expr logical_opr expr                     #exprLogical
-    | NOT expr                                  #exprNot
-    | DECIMAL                                   #exprDecimal
-    | DIGIT                                     #exprNum
-    | STR                                       #exprStr
-    | array_ID                                  #exprArrayId
-    | ID                                        #exprId
-    ;
+compoundStatement
+   : BEGIN statements END
+   ;
 
-size    : expr '..' expr;
+statements
+   : statement (SEMICOLON statement)*
+   ;
 
-comparison
-    : MAYORQUE      #comparisonMayor
-    | MENORQUE      #comparisonMenor
-    | MAYORIGUAL    #comparisonMayorIgual
-    | MENORIGUAL    #comparisonMenorIgual
-    | IGUAL         #comparisonIgual
-    | DISTINTO      #comparisonDistinto
-    ;
+conditionalStatement
+   : ifStatement
+   ;
 
-logical_opr
-    : AND   #logical_oprAnd
-    | OR    #logical_oprOr
-    ;
+ifStatement
+   : IF expression THEN statement (: ELSE statement)?
+   ;
 
+repetetiveStatement
+   : whileStatement
+   | repeatStatement
+   | forStatement
+   ;
 
-//----------------------------------------------RESERVADAS Y PALABRAS---------------------------------------------------
+whileStatement
+   : WHILE expression DO statement
+   ;
 
-//PALABRAS RESERVADAS
-AND: 'and';
-ARRAY: 'array';
-BEGIN: 'begin';
-CASE: 'case';
-CONST: 'const';
-DIV: 'div';
+repeatStatement
+   : REPEAT statements UNTIL expression
+   ;
+
+forStatement
+   : FOR identifier ASSIGN forList DO statement
+   ;
+
+forList
+   : initialValue (TO | DOWNTO) finalValue
+   ;
+
+initialValue
+   : expression
+   ;
+
+finalValue
+   : expression
+   ;
+
+AND: 'AND'; //YA ESTA
+
+ARRAY: 'ARRAY'; //YA ESTA
+
+BEGIN: 'begin'; //YA ESTA
+
+BOOLEAN: 'BOOLEAN'; //YA ESTA
+
+CASE: 'CASE';
+
+CHAR: 'CHAR';
+
+CHR: 'CHR';
+
+CONST: 'CONST';
+
+DIV: 'DIV';
+
 DO: 'do';
+
 DOWNTO: 'downto';
+
 ELSE: 'else';
-ELSEIF: 'elseif';
+
 END: 'end';
-FILE: 'file';
+
 FOR: 'for';
+
 FUNCTION: 'function';
-GOTO: 'goto';
+
 IF: 'if';
-IN: 'in';
-LABEL: 'label';
-MOD: 'mod';
-NIL: 'nil';
-NOT: 'not';
-OR: 'or';
-OF: 'of';
-PACKED: 'packed';
-PROCEDURE: 'procedure';
-PROGRAM: 'program';
-READ: 'read';
-RECORD: 'record';
-REPEAT: 'repeat';
-SET: 'set';
-THEN: 'then';
-TO: 'to';
-TYPE: 'type';
-UNTIL: 'until';
-VAR: 'var';
-WHILE: 'while';
-WRITE: 'write';
-WRITELN: 'writeln';
-WITH: 'with';
 
-//TIPOS DE DATOS
 INTEGER: 'INTEGER';
-FLOAT: 'float';
-CHARACTER: 'CHARACTER';
-BOOLEAN: 'BOOLEAN';
+
+LABEL: 'LABEL';
+
+MOD: 'mod';
+
+NIL: 'NIL';
+
+NOT: 'NOT';
+
+OF: 'OF';
+
+OR: 'OR';
+
+PACKED: 'PACKED';
+
+PROCEDURE: 'PROCEDURE';
+
+PROGRAM: 'program';
+
+RECORD: 'RECORD';
+
+REPEAT: 'repeat';
+
+SET: 'SET';
+
+THEN: 'then';
+
+TO: 'to';
+
+TYPE: 'TYPE';
+
+UNTIL: 'until';
+
+VAR: 'var';
+
+WHILE: 'while';
+
+PLUS: '+';
+
+MINUS: '-';
+
+MULT: '*';
+
+SLASH: '/';
+
+ASSIGN: ':=';
+
+COMMA: ',';
+
+SEMICOLON: ';';
+
+COLON: ':';
+
+EQUAL: '=';
+
+NOT_EQUAL: '<>';
+
+LT: '<';
+
+LE: '<=';
+
+GE: '>=';
+
+GT: '>';
+
+L_PAREN: '(';
+
+R_PAREN: ')';
+
+L_BRACK: '[';
+
+R_BRACK: ']';
+
+AT: '@';
+
+DOT: '.';
+
+DOUBLE_DOT: '..';
+
+LCURLY: '{';
+
+RCURLY: '}';
+
+UNIT: 'UNIT';
+
+INTERFACE: 'INTERFACE';
+
+USES: 'USES';
+
 STRING: 'STRING';
-CONSTCHAR: 'CONSTCHAR';
-CONSTSTR: 'CONSTSTR';
 
+IMPLEMENTATION: 'IMPLEMENTATION';
 
-//BUILDING BLOCKS
-//CHAR    : '\'' . '\'' ;
-CONST_VAL : '\'' (ESC | ~['\\])+ '\'' ;
-
-ID      : [a-z][A-Z0-9_]*;
-
-PERIOD  : '.';
-COMMA   : ',';
-COLON   : ':';
-SEMICOLON : ';';
-LEFTPAREN : '(';
-RIGHTPAREN : ')';
-LEFTBRACKET : '[';
-RIGHTBRACKET : ']';
-ASSIGN  : ':=';
-PLUS    : '+';
-MINUS   : '-';
-ASTERISK: '*';
-SLASH   : '/';
-MAYORQUE : '>';
-MENORQUE : '<';
-MAYORIGUAL : '>=';
-MENORIGUAL : '<=';
-IGUAL : '=';
-DISTINTO : '<>';
-
-
-BOOL_VAL: TRUE | FALSE;
 TRUE: 'true';
+
 FALSE: 'false';
-NEWLINE : [\r\n]+ -> skip;
-STR     : '"' (ESC | ~["\\\r\n\t])* '"' ; // Excludes \r, \n, \t from the string content
-ESC     : '\\"'  | '\\\\' | '\\t' | '\\n' | '\\r';
-//COMMENT : '{' .*? '}' -> skip; //Esta version permitia tener '{' dentro de los comentarios pero no '}'.
-COMMENT : '{' ~[{}]* '}' -> skip;
 
-LETTER  : [A-Z]+;
+WS: [ \t\n\r] -> skip;
 
-//NUMBERS
-DECIMAL   : DIGIT+ '.' DIGIT+;
-DIGIT     : [0-9]+;
+COMMENT: '{' .*? '}' -> skip;
 
-WS      : (' ' | '\t' | '\n' | '\r')+ -> skip;
+ID: [a-z][a-z0-9_]*;
+
+STRING_LITERAL: '\'' ('\'\'' | ~('\''))* '\'';
+
+NUM_INT: [0-9]+;
+
+READLN: 'READLN';
+
+READ: 'READ';
+
+WRITELN: 'WRITELN';
+
+WRITE: 'WRITE';

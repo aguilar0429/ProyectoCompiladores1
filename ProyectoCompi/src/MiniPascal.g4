@@ -397,9 +397,15 @@ ifStatement
    ;
 
 repetetiveStatement
-   : whileStatement
+   : compoundWhileStatement
+   | whileStatement
    | repeatStatement
+   | compoundForStatement
    | forStatement
+   ;
+
+compoundWhileStatement
+   : WHILE expression DO compoundStatement
    ;
 
 whileStatement
@@ -410,9 +416,14 @@ repeatStatement
    : REPEAT statements UNTIL expression
    ;
 
+compoundForStatement
+    : FOR identifier ASSIGN forList DO compoundStatement
+    ;
+
 forStatement
    : FOR identifier ASSIGN forList DO statement
    ;
+
 
 forList
    : initialValue (TO | DOWNTO) finalValue

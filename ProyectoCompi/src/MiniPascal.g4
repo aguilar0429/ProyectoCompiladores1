@@ -423,7 +423,7 @@ compoundForStatement
 
 forStatement
    : FOR identifier ASSIGN forList DO statement
-   | BEGIN forStatement END
+   | compoundStatement
    ;
 
 

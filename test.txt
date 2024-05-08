@@ -21,6 +21,7 @@ begin
     For i := x Downto 1 Do
     Begin
         For j := y Downto 1 Do
+
             arreglo_bidi[i,j] := ( cont + ( x - y ) + 5) mod 15;
     End;
 

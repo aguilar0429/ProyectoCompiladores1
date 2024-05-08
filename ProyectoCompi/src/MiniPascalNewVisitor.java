@@ -1248,10 +1248,13 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         System.out.println(aux);
         aux = aux.toLowerCase();
         System.out.println(aux);
-        if(aux.contains("begin")){
+        String inicio = aux.substring(0,5).toLowerCase();
+        if(inicio.equalsIgnoreCase("begin")){
             System.out.println("SI TIENE");
             aux = aux.substring(5, aux.length() - 3); //Removiendo palbars claves "Begin" y "End"
         }
+
+
 
         String[] statements = aux.split(";"); //Separando las statements
         String[] generatedStatements = new String[statements.length];

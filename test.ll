@@ -13,7 +13,7 @@ loop_check
 	%comparison = icmp slt i32, %current_value, 1
 	br i1 %compare_result, label %loop_body, label %loop_end
 loop_body:
-	nullloop_end:%counter = alloca i32
+loop_end:%counter = alloca i32
 store i32 1, i32* %counter
 br label loop_check
 loop_check
@@ -21,7 +21,7 @@ loop_check
 	%comparison = icmp slt i32, %current_value, 0
 	br i1 %compare_result, label %loop_body, label %loop_end
 loop_body:
-	null	nullloop_end:loop_check:
+loop_end:loop_check:
 	%compare = icmp  ne  %cont, %lenght
 	br i1 %compare, label %loop_body, label %loop_end
 loop_body

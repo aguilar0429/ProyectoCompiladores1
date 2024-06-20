@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import org.antlr.v4.gui.TreeViewer;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -11,6 +12,8 @@ import static org.antlr.v4.runtime.CharStreams.fromFileName;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -104,6 +107,9 @@ public class Main {
         Object str = visitante.visit(arbolito);
         System.out.println(ANSI_RESET + str  );
         String [] aux = input.split("\\.");
+
+        TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), arbolito);
+        viewer.open();
 
         generateCode(visitante,aux[0]);
     }

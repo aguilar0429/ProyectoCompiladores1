@@ -900,6 +900,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
 
     @Override
     public Object visitForStatement(MiniPascalParser.ForStatementContext ctx) {
+        System.out.println("estoy aqui?");
         System.out.println("prueba?: " + ctx.forList().getText());
         String initialValue = ctx.forList().initialValue().getText(),
                 finalValue = ctx.forList().finalValue().getText(),
@@ -934,9 +935,13 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         System.out.println("No se encontraron errores semánticos en el for statement");
         translatedStatements.add(generatedCode);
         try {
+            System.out.println("hola?");
             String[] blockStatements = statementsVisitor(ctx.statement());
             for (int i = 0; i < blockStatements.length; i++) {
-                translatedStatements.add("\t" + blockStatements[i]);
+                System.out.println("NULLL");
+                System.out.println(blockStatements[i]);
+                if(!blockStatements[i].equals("null"))
+                    translatedStatements.add("\t" + blockStatements[i]);
             }
         } catch (Exception e) {
         }
@@ -1079,6 +1084,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                 if (!typeLeft.equals(typeRight)) {
                     //Validando que no son del mismo tipo
                     validateSemantics = false;
+                    System.out.println("1");
                     System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
                     return null;
                 } else {
@@ -1144,6 +1150,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                         } else if (rightOperand.length() == 1) {
                             typeRight = "Character";
                         }
+                        System.out.println("2");
                         System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
                         return null;
                     }
@@ -1196,18 +1203,31 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
 
     public String[] statementsVisitor(MiniPascalParser.StatementContext ctx) {
         String aux = ctx.getText();
+        System.out.println("chau");
+        System.out.println(aux);
         aux = aux.substring(5, aux.length() - 3); //Removiendo palbars claves "Begin" y "End"
-        String[] statements = aux.split(";"); //Separando las statements
+        String[] statements = aux.split(";"); //Separando las statement
+
+        System.out.println(aux);
+
         String[] generatedStatements = new String[statements.length];
         int i = 0;
         for (String s : statements) {
+            System.out.println("Statements");
+            System.out.println(s);
+            // s = s.toLowerCase();
+            System.out.println(s);
             if (s.contains("if")) {
                 MiniPascalParser.IfStatementContext ifS = ctx.unlabelledStatement().structuredStatement().conditionalStatement().ifStatement();
                 visitIfStatement(ifS);
             } else if (s.contains("while")) {
                 MiniPascalParser.WhileStatementContext whileS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().whileStatement();
                 visitWhileStatement(whileS);
-            }else if(s.contains("for")){
+            }else if(s.contains("For")){
+                System.out.println("si tiene");
+                //MiniPascalParser.ForStatementContext forS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().forStatement();
+                // System.out.println(forS.getText());
+                // visitForStatement(forS);
                 System.out.println("Hay un for");
             } else if (s.contains(":=")) {
                 String generatedCode = "store ";
@@ -1220,7 +1240,9 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                     rightOperand = splittingStatement[1];
                 } catch (Exception e) {
                 }
-
+                System.out.println("AQUIIIIIIIIII");
+                System.out.println(leftOperand);
+                System.out.println(rightOperand);
                 boolean leftIsDeclared = false, rightIsDeclared = false;
                 /*
                  * Primer/Segunda flag valida si, ya sea el operando de la izquierda o el de la derecha
@@ -1239,6 +1261,8 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
 
                 if (leftIsDeclared && rightIsDeclared) {
                     System.out.println("Ambas estan declaradas");
+                    System.out.println(leftOperand);
+                    System.out.println(rightOperand);
                     String typeLeft = "", typeRight = "";
                     for (Variable v : symbol_table.getVariables()) {
                         if (v.getId().equals(leftOperand)) {
@@ -1250,6 +1274,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                     if (!typeLeft.equals(typeRight)) {
                         //Validando que no son del mismo tipo
                         validateSemantics = false;
+                        System.out.println("3");
                         System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
                         return null;
                     } else {
@@ -1289,7 +1314,6 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                     System.out.println("variable a la izquierda esta declarada");
                     String typeLeft = "";
                     int posVariable = -1;
-                    //Obteniendo el tipo de la variable
                     for (Variable v : symbol_table.getVariables()) {
                         if (v.getId().equals(leftOperand)) {
                             typeLeft = v.getType();
@@ -1299,12 +1323,14 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                     }
                     if (typeLeft.equalsIgnoreCase("integer")) {
                         try {
-                            //Obteniendo el valor de la derecha siendo este un entero
+                            System.out.println("RRRRRRRRRRRRRRRRRR");
+                            System.out.println(rightOperand);
                             int rightOperandValue = Integer.parseInt(rightOperand);
                             symbol_table.getVariables().get(posVariable).setValue(rightOperandValue);
                             generatedCode += "i32 " + rightOperandValue + ", i32* %" + leftOperand + "\n";
 
                         } catch (NumberFormatException e) {
+                            System.out.println(e);
                             validateSemantics = false;
                             String typeRight = "";
                             if (rightOperand.equalsIgnoreCase("true") || rightOperand.equalsIgnoreCase("false")) {
@@ -1314,6 +1340,7 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                             } else if (rightOperand.length() == 1) {
                                 typeRight = "Character";
                             }
+                            System.out.println("4");
                             System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
                             return null;
                         }

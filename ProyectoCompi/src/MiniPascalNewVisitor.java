@@ -650,10 +650,11 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         System.out.println("No se encontraron errores semánticos en el while statement");
 
         generatedCode += "\t%compare = icmp " + opRelLLVM + " %" + leftTerm + ", %" + rightTerm + "\n\tbr i1 %compare, label %loop_body, label %loop_end\nloop_body\n";
-        String[] blockStatements = statementsVisitor(ctx.statement()); //ESTA COMENTADO POR EL MOMENTO
+        String[] blockStatements = statementsVisitor(ctx.statement());
         translatedStatements.add(generatedCode);
         try{
             for (int k = 0; k < blockStatements.length; k++) {
+                System.out.println(blockStatements[k]);
                 translatedStatements.add("\t" + blockStatements[k]);
             }
         } catch (Exception e) {
@@ -884,15 +885,15 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         translatedStatements.add(generatedCode);
         translatedStatements.add("\n\tbr i1 %compare, label %if_true, label %end_if\nif_true:\n");
         System.out.println(">>>>>>>>>>>>>>>>>>>");
-        String[] blockStatements = statementsVisitor(ctx.statement(0));
-        System.out.println(">>>>>>>>>>>>>>>>>>>");
-        try {
-            for (int k = 0; k < blockStatements.length; k++) {
-                translatedStatements.add("\t" + blockStatements[k]);
-            }
-        } catch (Exception e) {
-
-        }
+//        String[] blockStatements = statementsVisitor(ctx.statement(0));
+//        System.out.println(">>>>>>>>>>>>>>>>>>>");
+//        try {
+//            for (int k = 0; k < blockStatements.length; k++) {
+//                translatedStatements.add("\t" + blockStatements[k]);
+//            }
+//        } catch (Exception e) {
+//
+//        }
 
         translatedStatements.add("end_if:\n");
         return null;
@@ -1218,16 +1219,20 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
             // s = s.toLowerCase();
             System.out.println(s);
             if (s.contains("if")) {
-                MiniPascalParser.IfStatementContext ifS = ctx.unlabelledStatement().structuredStatement().conditionalStatement().ifStatement();
+                MiniPascalParser.IfStatementContext ifS = ctx.unlabelledStatement().structuredStatement().compoundStatement().statements().statement(0).unlabelledStatement().structuredStatement().conditionalStatement().ifStatement();
                 visitIfStatement(ifS);
             } else if (s.contains("while")) {
-                MiniPascalParser.WhileStatementContext whileS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().whileStatement();
+                MiniPascalParser.WhileStatementContext whileS = ctx.unlabelledStatement().structuredStatement().compoundStatement().statements().statement(0).unlabelledStatement().structuredStatement().repetetiveStatement().whileStatement();
                 visitWhileStatement(whileS);
+                System.out.println("aqui viene");
+                //System.out.println(ss);
+                //  System.out.println(ctx.statement());
             }else if(s.contains("For")){
                 System.out.println("si tiene");
-                //MiniPascalParser.ForStatementContext forS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().forStatement();
+                System.out.println(s);
+                MiniPascalParser.ForStatementContext forS = ctx.unlabelledStatement().structuredStatement().compoundStatement().statements().statement(0).unlabelledStatement().structuredStatement().repetetiveStatement().forStatement();
                 // System.out.println(forS.getText());
-                // visitForStatement(forS);
+                visitForStatement(forS);
                 System.out.println("Hay un for");
             } else if (s.contains(":=")) {
                 String generatedCode = "store ";
@@ -1387,6 +1392,9 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                 i++;
             }
         }
+        System.out.println("HEHEHE");
+        for (String b : generatedStatements)
+            System.out.println(b);
         return generatedStatements;
     }
 

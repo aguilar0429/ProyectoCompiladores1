@@ -17,24 +17,17 @@ begin
     cont := 1;
 
     {llenamos el arreglo bidimensional}
-
     For i := x Downto 1 Do
-    Begin
-        For j := y Downto 1 Do
-
             arreglo_bidi[i,j] := ( cont + ( x - y ) + 5) mod 15;
-    End;
-
-
-
-
 
     {reiniciamos el contador}
     cont := 1;
 
-
-
-
+    {llenamos el arreglo unidimensional}
+    For i := 1 To x Do
+        For j := 1 To y Do
+            {arreglo[cont] := arreglo_bidi[i,j];}
+            cont := ( cont + 1 ) ;
 
     {reiniciamos el contador}
     cont := 1;

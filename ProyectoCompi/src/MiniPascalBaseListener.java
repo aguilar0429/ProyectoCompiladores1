@@ -1048,18 +1048,6 @@ public class MiniPascalBaseListener implements MiniPascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompoundWhileStatement(MiniPascalParser.CompoundWhileStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompoundWhileStatement(MiniPascalParser.CompoundWhileStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterWhileStatement(MiniPascalParser.WhileStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1079,18 +1067,6 @@ public class MiniPascalBaseListener implements MiniPascalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRepeatStatement(MiniPascalParser.RepeatStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

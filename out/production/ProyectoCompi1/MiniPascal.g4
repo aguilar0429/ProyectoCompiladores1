@@ -285,6 +285,10 @@ expression
    : simpleExpression (relationaloperator expression)?
    ;
 
+expression2
+   : term (relationaloperator expression)?
+   ;
+
 relationaloperator
    : EQUAL
    | NOT_EQUAL
@@ -384,7 +388,6 @@ compoundStatement
    : BEGIN statements END
    ;
 
-
 statements
    : statement (SEMICOLON statement)*
    ;
@@ -398,34 +401,22 @@ ifStatement
    ;
 
 repetetiveStatement
-   : compoundWhileStatement
-   | whileStatement
+   : whileStatement
    | repeatStatement
-
    | forStatement
    ;
 
-compoundWhileStatement
-   : WHILE expression DO compoundStatement
-   ;
-
 whileStatement
-   : WHILE expression DO statement
+   : WHILE expression2 DO statement
    ;
 
 repeatStatement
    : REPEAT statements UNTIL expression
    ;
 
-compoundForStatement
-    : FOR identifier ASSIGN forList DO compoundStatement
-    ;
-
 forStatement
    : FOR identifier ASSIGN forList DO statement
-   | compoundStatement
    ;
-
 
 forList
    : initialValue (TO | DOWNTO) finalValue

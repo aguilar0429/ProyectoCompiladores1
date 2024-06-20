@@ -1,48 +1,47 @@
 program ciclos;
-    {declaramos las variables}
-    var lenght,i,j,x,y,cont:Integer;
-        arreglo:Array[1..50] of Integer;
-        arreglo_bidi: Array[1..10,1..5] of Integer;
-    s:String;
-
-    Function f():Integer;
-     Begin
-        f := 3;
-     end;
+	{declaramos las variables}
+	var lenght,i,j,x,y,cont,z:Integer;
+ 		arreglo:Array[1..50] of Integer;
+ 		arreglo_bidi: Array[1..10,1..5] of Integer;
+	s:String;
+	Function f():Integer;
+	Begin
+		f := 3;
+	end;
 begin
-    {iniciamos las variables}
-    lenght := 50;
-    x := 10;
-    y := 5;
-    cont := 1;
+	{iniciamos las variables}
+	lenght := 50;
+	x := 10;
+	y := 5;
+	cont := 1;
+	{llenamos el arreglo bidimensional}
+	For i := x Downto 1 Do
+	Begin
+		For j := y Downto 1 Do
+			arreglo_bidi[i,j] := ( cont + ( x - y ) + 5) mod 15;
 
-    {llenamos el arreglo bidimensional}
+	End;
 
-    For i := x Downto 1 Do
-    Begin
-        For j := y Downto 1 Do
+	{reiniciamos el contador}
+	cont := 1;
+	z:=1;
 
-            arreglo_bidi[i,j] := ( cont + ( x - y ) + 5) mod 15;
-    End;
+	{llenamos el arreglo unidimensional}
+	For i := 1 To x Do
+		For j := 1 To y Do
+		Begin
+            cont :=  (cont + 1) ;
+            arreglo[cont] := arreglo_bidi[i,j];
+        End;
 
+	{reiniciamos el contador}
+	cont := 1;
 
-
-
-
-    {reiniciamos el contador}
-    cont := 1;
-
-
-
-
-
-    {reiniciamos el contador}
-    cont := 1;
-    {imprimimos el arreglo unidimensional}
-    While ( cont <> lenght+1 ) Do
-    Begin
-        write('arreglo[%d] = ',cont);
-        writeln('%d',arreglo[cont]);
-    End;
-    writeln('Gracias por usar Pascal!');
+	{imprimimos el arreglo unidimensional}
+    While ( cont + 1 <> lenght) Do
+        Begin
+            write('arreglo[%d] = ',cont);
+            writeln('%d',arreglo[cont]);
+        End;
+	writeln('Gracias por usar Pascal!');
 end.

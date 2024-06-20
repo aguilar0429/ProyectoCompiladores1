@@ -526,12 +526,6 @@ public interface MiniPascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRepetetiveStatement(MiniPascalParser.RepetetiveStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MiniPascalParser#compoundWhileStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompoundWhileStatement(MiniPascalParser.CompoundWhileStatementContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MiniPascalParser#whileStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -543,12 +537,6 @@ public interface MiniPascalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRepeatStatement(MiniPascalParser.RepeatStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MiniPascalParser#compoundForStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MiniPascalParser#forStatement}.
 	 * @param ctx the parse tree

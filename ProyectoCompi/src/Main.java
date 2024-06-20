@@ -7,6 +7,9 @@ import java.io.File;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.BaseErrorListener;
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
+
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
@@ -100,27 +103,29 @@ public class Main {
         MiniPascalNewVisitor visitante = new MiniPascalNewVisitor();
         Object str = visitante.visit(arbolito);
         System.out.println(ANSI_RESET + str  );
-    }
+        String [] aux = input.split("\\.");
 
-}
-/*
-@Override
-    public Void visitFunction(MiniPascalParser.FunctionContext ctx) {
-        symbolTables.get(scopeStack.peek().getName()).addSymbol(new ParametrizedSymbol(ctx.ID().getText(), ctx.TYPE().getText(), Symbol.Categ.FUNCTION));
-        tempParamSymb = symbolTables.get(scopeStack.peek().getName()).getSymbol(ctx.ID().getText());
-        scopeStack.push(new Scope(ctx.ID().getText(), scopeStack.peek()));
-        symbolTables.put(scopeStack.peek().getName(), new SymbolTable(scopeStack.peek()));
-        int paramSize = ctx.paramlist().size();
-        for (int i = 0; i < paramSize; i++) {
-            visit(ctx.paramlist(i));
+        generateCode(visitante,aux[0]);
+    }
+    public static void generateCode(MiniPascalNewVisitor vmp, String path){
+        if (vmp.validateSemantics){
+            //Aqui se genera el codigo en LLVM
+            File f = new File("./"+path+".ll");
+            try {
+                FileOutputStream fos = new FileOutputStream(f);
+                System.out.println("Generating code");
+                for (String s: vmp.translatedStatements) {
+                    byte[]data = s.getBytes(StandardCharsets.UTF_8);
+                    fos.write(data);
+                }
+                fos.close();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación del archivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Errores semánticos encontrados, no se puede generar código.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        tempParamSymb = null;
-        if (ctx.varblock() != null)
-            visit(ctx.varblock());
-        if (ctx.block() != null)
-            visit(ctx.block());
 
-        scopeStack.pop();
-        return null;
     }
- */
+}
+

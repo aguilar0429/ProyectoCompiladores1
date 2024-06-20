@@ -535,12 +535,17 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
     @Override
     public Object visitWhileStatement(MiniPascalParser.WhileStatementContext ctx) {
         String expression = ctx.expression().getText();
-        String relationalOperator = ctx.expression().relationaloperator().getText();
-        String[] allExpressions;
-        allExpressions = expression.split(relationalOperator);
+
+        System.out.println("EXPR: " + expression);
+        String relationalOperator = ctx.expression().simpleExpression().term().signedFactor().factor().expression().relationaloperator().getText();
+
+        System.out.println("term: " + relationalOperator);
         String leftTerm, rightTerm;
-        leftTerm = allExpressions[0];
-        rightTerm = allExpressions[1];
+        leftTerm = ctx.expression().simpleExpression().term().signedFactor().factor().expression().simpleExpression().term().getText();
+        System.out.println(leftTerm);
+        rightTerm = ctx.expression().simpleExpression().term().signedFactor().factor().expression().expression().simpleExpression().term().getText();
+
+        System.out.println(rightTerm);
         String generatedCode = "loop_check:\n";
 
         // Validación de sí las variables fueron declaradas previamente
@@ -893,11 +898,9 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         return null;
     }
 
-
-
     @Override
     public Object visitForStatement(MiniPascalParser.ForStatementContext ctx) {
-        System.out.println("prueba?: " + ctx.getText());
+        System.out.println("prueba?: " + ctx.forList().getText());
         String initialValue = ctx.forList().initialValue().getText(),
                 finalValue = ctx.forList().finalValue().getText(),
                 identifier = ctx.identifier().getText();
@@ -931,66 +934,15 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         System.out.println("No se encontraron errores semánticos en el for statement");
         translatedStatements.add(generatedCode);
         try {
-            System.out.println("HELLO");
             String[] blockStatements = statementsVisitor(ctx.statement());
             for (int i = 0; i < blockStatements.length; i++) {
                 translatedStatements.add("\t" + blockStatements[i]);
             }
         } catch (Exception e) {
-            System.out.println(e);
         }
         translatedStatements.add("loop_end:");
         return null;
     }
-//    @Override
-//    public Object visitCompoundForStatement(MiniPascalParser.CompoundForStatementContext ctx) {
-//        System.out.println("HELLo");
-//        System.out.println("HI prueba?: " + ctx.forList().getText());
-//        String initialValue = ctx.forList().initialValue().getText(),
-//                finalValue = ctx.forList().finalValue().getText(),
-//                identifier = ctx.identifier().getText();
-//        System.out.println("INI: " + initialValue);
-//        System.out.println("FIN: " + finalValue);
-//        int initial_int_value = 0,
-//                final_int_value = 0;
-//
-//        if (validarDeclaracionVariables(initialValue) && firstCharIsLetter(initialValue)) { //aquí se valida que la variable ya haya sido declarada, el firstChar method es usado para asegurarnos que la asignación es a una variable (i = x) y no a un número (i = 1)
-//            //aquí se guarda el valor de la variable
-//            initial_int_value = getVariableValue(initialValue);
-//        } else if (isInteger(initialValue)) {//valida que si no se asigna una variable (i = x), se asigna un numero (i = 1)
-//            initial_int_value = Integer.parseInt(initialValue);
-//        } else {
-//            System.out.println(error_color + "Error Semántico: La variable " + initialValue + " no ha sido declarada o no es válida");
-//            return null;
-//        }
-//
-//        if (validarDeclaracionVariables(finalValue) && firstCharIsLetter(finalValue)) {//aquí se valida que la variable ya haya sido declarada, el firstChar method es usado para asegurarnos que la asignación es a una variable (i = x) y no a un número (i = 1)
-//            //aquí se guarda el valor de la variable
-//            final_int_value = getVariableValue(finalValue);
-//        } else if (isInteger(finalValue)) {//valida que si no se asigna una variable (i = x), se asigna un numero (i = 1)
-//            final_int_value = Integer.parseInt(finalValue);
-//        } else {
-//            System.out.println(error_color + "Error Semántico: La variable " + finalValue + " no ha sido declarada o no es válida");
-//            return null;
-//        }
-//        String generatedCode = "%counter = alloca i32\nstore i32 " + initialValue + ", i32* %counter\nbr label loop_check\nloop_check" +
-//                "\n\t%current_value = load i32, i32* %counter\n\t%comparison = icmp slt i32, %current_value, " + final_int_value + "" +
-//                "\n\tbr i1 %compare_result, label %loop_body, label %loop_end\nloop_body:\n";
-//        System.out.println("No se encontraron errores semánticos en el for statement");
-//        translatedStatements.add(generatedCode);
-//        try {
-//            System.out.println("Hi?");
-//            String[] blockStatements = compoundStatementsVisitor(ctx.compoundStatement());
-//            System.out.println("hi2");
-//            for (int i = 0; i < blockStatements.length; i++) {
-//                translatedStatements.add("\t" + blockStatements[i]);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        translatedStatements.add("loop_end:");
-//        return null;
-//    }
 
     /***
      * Recibe un string e indica si el primer char  es una letra
@@ -1243,26 +1195,12 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
     }
 
     public String[] statementsVisitor(MiniPascalParser.StatementContext ctx) {
-        System.out.println("HERE");
         String aux = ctx.getText();
-        System.out.println(aux);
-        aux = aux.toLowerCase();
-        System.out.println(aux);
-        String inicio = aux.substring(0,5).toLowerCase();
-        if(inicio.equalsIgnoreCase("begin")){
-            System.out.println("SI TIENE");
-            aux = aux.substring(5, aux.length() - 3); //Removiendo palbars claves "Begin" y "End"
-        }
-
-
-
+        aux = aux.substring(5, aux.length() - 3); //Removiendo palbars claves "Begin" y "End"
         String[] statements = aux.split(";"); //Separando las statements
         String[] generatedStatements = new String[statements.length];
-        System.out.println(aux);
         int i = 0;
         for (String s : statements) {
-            System.out.println("S: "+ s);
-            s = s.toLowerCase();
             if (s.contains("if")) {
                 MiniPascalParser.IfStatementContext ifS = ctx.unlabelledStatement().structuredStatement().conditionalStatement().ifStatement();
                 visitIfStatement(ifS);
@@ -1270,11 +1208,6 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
                 MiniPascalParser.WhileStatementContext whileS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().whileStatement();
                 visitWhileStatement(whileS);
             }else if(s.contains("for")){
-                System.out.println("FORR");
-                System.out.println(ctx.getText());
-
-                MiniPascalParser.ForStatementContext forS = ctx.unlabelledStatement().structuredStatement().repetetiveStatement().forStatement();
-                visitForStatement(forS);
                 System.out.println("Hay un for");
             } else if (s.contains(":=")) {
                 String generatedCode = "store ";
@@ -1429,189 +1362,6 @@ public class MiniPascalNewVisitor extends MiniPascalBaseVisitor<Object> {
         }
         return generatedStatements;
     }
-//    public String[] compoundStatementsVisitor(MiniPascalParser.CompoundStatementContext ctx) {
-//        System.out.println("IM HEREE");
-//        String aux =  ctx.statements().getText();
-//        MiniPascalParser.StatementsContext list = (MiniPascalParser.StatementsContext) ctx.statements();
-//        System.out.println(list.getClass());
-//
-//        String[] statements = aux.split(";"); //Separando las statements
-//        String[] generatedStatements = new String[statements.length];
-//        System.out.println(aux);
-//
-////        for (int i =0 ; i < list.size();i++){
-////
-////        }
-//
-//
-//        int i = 0;
-//        for (String s : statements) {
-//
-//            s = s.toLowerCase();
-//            if (s.contains("if")) {
-////                MiniPascalParser.IfStatementContext ifS = ctx3.unlabelledStatement().structuredStatement().conditionalStatement().ifStatement();
-////                visitIfStatement(ifS);
-//            } else if (s.contains("while")) {
-////                MiniPascalParser.WhileStatementContext whileS = ctx3.unlabelledStatement().structuredStatement().repetetiveStatement().whileStatement();
-////                visitWhileStatement(whileS);
-//            }else if(s.contains("for")){
-////                MiniPascalParser.ForStatementContext forS = ctx3.unlabelledStatement().structuredStatement().repetetiveStatement().forStatement();
-////                visitForStatement(forS);
-//                System.out.println("Hay un for");
-//
-//            } else if (s.contains(":=")) {
-//                String generatedCode = "store ";
-//                String[] splittingStatement = s.split(":="); //diviendo los argumentos de cada statement
-//                String type = "";
-//                boolean flag = false;
-//                String leftOperand = "", rightOperand = "";
-//                try {
-//                    leftOperand = splittingStatement[0];
-//                    rightOperand = splittingStatement[1];
-//                } catch (Exception e) {
-//                }
-//
-//                boolean leftIsDeclared = false, rightIsDeclared = false;
-//                /*
-//                 * Primer/Segunda flag valida si, ya sea el operando de la izquierda o el de la derecha
-//                 * es una variable ya declarada y agregada en la tabla de simbolos.
-//                 */
-//
-//                for (Variable v : symbol_table.getVariables()) {
-//                    if (v.getId().equals(leftOperand)) {
-//                        leftIsDeclared = true;
-//                    } else if (v.getId().equals(rightOperand)) {
-//                        rightIsDeclared = true;
-//                    } else if (leftIsDeclared && rightIsDeclared) {
-//                        break;
-//                    }
-//                }
-//
-//                if (leftIsDeclared && rightIsDeclared) {
-//                    System.out.println("Ambas estan declaradas");
-//                    String typeLeft = "", typeRight = "";
-//                    for (Variable v : symbol_table.getVariables()) {
-//                        if (v.getId().equals(leftOperand)) {
-//                            typeLeft = v.getType();
-//                        } else if (v.getId().equals(rightOperand)) {
-//                            typeRight = v.getType();
-//                        }
-//                    }
-//                    if (!typeLeft.equals(typeRight)) {
-//                        //Validando que no son del mismo tipo
-//                        validateSemantics = false;
-//                        System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
-//                        return null;
-//                    } else {
-//                        System.out.println("Expresion de asignacion valida con variables " + leftOperand + " y " + rightOperand);
-//                        int posL = -1, posR = -1;
-//                        //Buscando las variables en la tabla de simbolos
-//                        for (Variable v : symbol_table.getVariables()) {
-//                            if (v.getId().equals(leftOperand)) {
-//                                posL = symbol_table.getVariables().indexOf(v);
-//                            } else if (v.getId().equals(rightOperand)) {
-//                                posR = symbol_table.getVariables().indexOf(v);
-//                            }
-//                        }
-//                        //Obteniendo el valor de la variable a la derecha para signarlo a la de la izquierda de la expresion
-//                        Object o = symbol_table.getVariables().get(posR).getValue();
-//                        symbol_table.getVariables().get(posL).setValue(o);
-//                        switch (typeLeft) {
-//                            case "integer":
-//                                generatedCode += "i32 " + o.toString() + ", i32* %" + leftOperand + "\n";
-//                                break;
-//                            case "character":
-//                                generatedCode += "i8 " + (int) o.toString().charAt(0) + ", i8* %" + leftOperand + "\n";
-//                                break;
-//                            case "string":
-//                                int size = o.toString().length();
-//                                generatedCode += "[" + size + " x i8] c\"" + o.toString().substring(1, o.toString().length() - 2) + "\\00\", [\"+size+\" x i8]* %" + leftOperand + "\n";
-//                                break;
-//                            case "boolean":
-//                                generatedCode += "i1 " + o.toString().toLowerCase() + ", i1* %" + leftOperand + "\n";
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        System.out.println(generatedCode);
-//                    }
-//                } else if (leftIsDeclared) {
-//                    System.out.println("variable a la izquierda esta declarada");
-//                    String typeLeft = "";
-//                    int posVariable = -1;
-//                    //Obteniendo el tipo de la variable
-//                    for (Variable v : symbol_table.getVariables()) {
-//                        if (v.getId().equals(leftOperand)) {
-//                            typeLeft = v.getType();
-//                            posVariable = symbol_table.getVariables().indexOf(v);
-//                            break;
-//                        }
-//                    }
-//                    if (typeLeft.equalsIgnoreCase("integer")) {
-//                        try {
-//                            //Obteniendo el valor de la derecha siendo este un entero
-//                            int rightOperandValue = Integer.parseInt(rightOperand);
-//                            symbol_table.getVariables().get(posVariable).setValue(rightOperandValue);
-//                            generatedCode += "i32 " + rightOperandValue + ", i32* %" + leftOperand + "\n";
-//
-//                        } catch (NumberFormatException e) {
-//                            validateSemantics = false;
-//                            String typeRight = "";
-//                            if (rightOperand.equalsIgnoreCase("true") || rightOperand.equalsIgnoreCase("false")) {
-//                                typeRight = "Boolean";
-//                            } else if (rightOperand.length() > 1) {
-//                                typeRight = "String";
-//                            } else if (rightOperand.length() == 1) {
-//                                typeRight = "Character";
-//                            }
-//                            System.out.println(error_color + "Error semántico en la fila " + ctx.getStart().getLine() + ", columna " + ctx.getStart().getCharPositionInLine() + ": " + ctx.getText() + ". No hay manera explícita de asignar un valor de tipo " + typeRight + " a una variable de tipo " + typeLeft);
-//                            return null;
-//                        }
-//                    } else if (typeLeft.equalsIgnoreCase("character")) {
-//                        if (rightOperand.length() != 3) {
-//                            validateSemantics = false;
-//                            System.out.println(error_color + "Error semántico. No hay manera explicita de asignar un valor del tipo ingresado a una variable de tipo Character");
-//                            return null;
-//                        } else {
-//                            char rightOperandValue = rightOperand.charAt(1);
-//                            symbol_table.getVariables().get(posVariable).setValue(rightOperandValue);
-//                            generatedCode += "i8 " + (int) rightOperandValue + ", i8* %" + leftOperand + "\n";
-//                            System.out.println("Expresion de asignacion valida");
-//                        }
-//                    } else if (typeLeft.equalsIgnoreCase("boolean")) {
-//                        if (rightOperand.equalsIgnoreCase("true") || rightOperand.equalsIgnoreCase("false")) {
-//                            boolean rightOperandValue = Boolean.valueOf(rightOperand.toLowerCase());
-//                            symbol_table.getVariables().get(posVariable).setValue(rightOperandValue);
-//                            generatedCode += "i1 " + rightOperandValue + ", i1* %" + leftOperand + "\n";
-//                            System.out.println("Expresion de asignacion valida");
-//                        } else {
-//                            validateSemantics = false;
-//                            System.out.println(error_color + "Error semántico. No hay manera explicita de asignar un valor del tipo ingresado a una variable de tipo Boolean");
-//                            return null;
-//                        }
-//                    } else if (typeLeft.equalsIgnoreCase("string")) {
-//                        if ((rightOperand.charAt(0) == '"') && (rightOperand.charAt(rightOperand.length() - 1) == '"')) {
-//                            String rightOperandValue = rightOperand.substring(1, rightOperand.length() - 2);
-//                            symbol_table.getVariables().get(posVariable).setValue(rightOperandValue);
-//                            int size = rightOperandValue.length();
-//                            generatedCode += "[" + size + " x i8] c\"" + rightOperandValue + "\\00\", [\"+size+\" x i8]* %" + leftOperand + "\n";
-//                            System.out.println("Expresion de comparacion valida");
-//                        } else {
-//                            validateSemantics = false;
-//                            System.out.println(error_color + "Error semántico. No hay manera explicita de asignar un valor del tipo ingresado a una variable de tipo String");
-//                            return null;
-//                        }
-//                    }
-//                }
-//                if (!generatedCode.equals("store ")){
-//                    generatedStatements[i] = generatedCode;
-//                    System.out.println("-------\n"+generatedCode+"-><-");
-//                }
-//                i++;
-//            }
-//        }
-//        return generatedStatements;
-//    }
 
     public boolean validarDeclaracionVariables(String variableName) {
         ArrayList<Variable> symbolTableVariables = symbol_table.getVariables();

@@ -7,6 +7,9 @@ import java.io.File;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.BaseErrorListener;
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
+
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
@@ -98,8 +101,31 @@ public class Main {
 
         ParseTree arbolito = parser.program();
         MiniPascalNewVisitor visitante = new MiniPascalNewVisitor();
-        String str = visitante.visit(arbolito);
+        Object str = visitante.visit(arbolito);
         System.out.println(ANSI_RESET + str  );
-    }
+        String [] aux = input.split("\\.");
 
+        generateCode(visitante,aux[0]);
+    }
+    public static void generateCode(MiniPascalNewVisitor vmp, String path){
+        if (vmp.validateSemantics){
+            //Aqui se genera el codigo en LLVM
+            File f = new File("./"+path+".ll");
+            try {
+                FileOutputStream fos = new FileOutputStream(f);
+                System.out.println("Generating code");
+                for (String s: vmp.translatedStatements) {
+                    byte[]data = s.getBytes(StandardCharsets.UTF_8);
+                    fos.write(data);
+                }
+                fos.close();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la creación del archivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Errores semánticos encontrados, no se puede generar código.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
 }
+

@@ -1,0 +1,18 @@
+program ifprog(input, output);
+ 
+ 
+var
+   number: integer;
+
+ 
+begin
+
+  while number = 0 do begin
+     writeln('Try again please, integer between 0 and 100');
+  end;
+ 
+  while number < 0 do begin
+     writeln('Try again please, integer between 0 and 100');
+  end;
+
+end.
